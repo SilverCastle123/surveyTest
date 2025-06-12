@@ -17,6 +17,11 @@
     max-width: 720px;
 }
 
+.draggable.dragging {
+  opacity: 0.5;
+  border: 2px dashed #007bff;
+  background-color: #f1f9ff;
+}
 </style>
     
 </head>

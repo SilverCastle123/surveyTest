@@ -66,6 +66,7 @@ html, body {
   align-items: center;
 }
 
+
 .init-nav li + li::before {
   content: "›";
   padding: 0 8px;
