@@ -47,8 +47,11 @@
   			</div>
 		</div>
 		
-		<div class="card" style="position: fixed; top: 50%; right: 32px; transform: translateY(-50%); width: 160px; z-index: 1000;">
-			<button type="button" class="init-btn" id="addQuestionBtn">문항 추가</button>
+		<div class="card" style="position: fixed; top: 50%; right: 32px; transform: translateY(-50%); width: 300px; z-index: 1000;">
+			<button type="button" class="init-btn addQuestionBtn" id="objectV">객관식 문항 (세로) 추가</button>
+			<button type="button" class="init-btn addQuestionBtn" id="objectH">객관식 문항 (가로) 추가</button>
+			<button type="button" class="init-btn addQuestionBtn" id="subject">주관식 문항 추가</button>
+			<button type="button" class="init-btn addQuestionBtn" id="grid">그리드 문항 추가</button>
 			<button class="init-btn" onclick="goNextStep()">다음</button>
 			<button type="button" class="init-btn" id="cancelBtn">취소</button>
 		</div>
