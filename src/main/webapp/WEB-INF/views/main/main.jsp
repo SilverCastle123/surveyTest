@@ -6,26 +6,38 @@
 
 <!--  나중에 삭제  -->
 <style type="text/css">
-@keyframes runPopcat {
+@keyframes runAndSquish {
   0% {
     left: 0;
-    transform: scaleX(1);
+    transform: scaleX(1) scaleY(1);
+  }
+  10% {
+    transform: scaleX(1) scaleY(1.2);
+  }
+  20% {
+    transform: scaleX(1) scaleY(1);
   }
   45% {
     left: calc(100% - 150px);
-    transform: scaleX(1);
+    transform: scaleX(1) scaleY(1.2);
   }
   50% {
     left: calc(100% - 150px);
-    transform: scaleX(-1); /* 반전 지점 */
+    transform: scaleX(-1) scaleY(1);
+  }
+  60% {
+    transform: scaleX(-1) scaleY(1.2);
+  }
+  70% {
+    transform: scaleX(-1) scaleY(1);
   }
   95% {
     left: 0;
-    transform: scaleX(-1);
+    transform: scaleX(-1) scaleY(1.2);
   }
   100% {
     left: 0;
-    transform: scaleX(1); /* 다시 정방향 */
+    transform: scaleX(1) scaleY(1);
   }
 }
 
@@ -33,8 +45,9 @@
   position: absolute;
   top: 100px;
   width: 150px;
-  animation: runPopcat 10s ease-in-out infinite;
+  animation: runAndSquish 10s ease-in-out infinite;
 }
+
 </style>
  
 <meta charset="UTF-8">
@@ -52,7 +65,7 @@
 	<div class="content">
 		
 		<div class="input-group w-50 mb-3" style="justify-self: center;">
-			<input type="text" class="form-control" placeholder="검색어를 입력해주세요">
+			<input type="text" class="form-control" placeholder="검색어를 입력해주세요" id="searchText">
 		  	<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 		</div>
 		
@@ -72,32 +85,47 @@
 		    	</thead>
 		    	<tbody>
 		        	<tr>
+		        		<td hidden="true">S00125</td>
 				        <td>1</td>
-				        <td>지역 상권 활성화를 위한 소비자 만족도 조사.</td>
+				        <td>
+				        	<a href="#">지역 상권 활성화를 위한 소비자 만족도 조사</a>
+				        </td>
 				        <td>2025-06-12</td>
 				        <td>2025-07-12</td>
 			    	</tr>
 		        	<tr>
+		        		<td hidden="true">S00371</td>
 				        <td>2</td>
-				        <td>공공시설 이용자 서비스 품질 평가 설문조사</td>
+				        <td>
+				        	<a href="#">공공시설 이용자 서비스 품질 평가 설문조사</a>
+				        </td>
 				        <td>2025-05-01</td>
 				        <td>2025-06-28</td>
 			    	</tr>
 		        	<tr>
+		        		<td hidden="true">S00082</td>
 				        <td>3</td>
-				        <td>교통복지 향상을 위한 대중교통 이용 실태 조사</td>
+				        <td>
+				        	<a href="#">교통복지 향상을 위한 대중교통 이용 실태 조사</a>
+				        </td>
 				        <td>2025-06-03</td>
 				        <td>2025-07-03</td>
 			    	</tr>
 		        	<tr>
+		        		<td hidden="true">S02091</td>
 				        <td>4</td>
-				        <td>기후변화 대응을 위한 주민 인식 및 참여도 조사</td>
+				        <td>
+				        	<a href="#">기후변화 대응을 위한 주민 인식 및 참여도 조사</a>
+				        </td>
 				        <td>2025-05-01</td>
 				        <td>2025-06-28</td>
 			    	</tr>
 		        	<tr>
+		        		<td hidden="true">S01904</td>
 				        <td>5</td>
-				        <td>생활안전 및 치안 만족도 향상 설문조사</td>
+				        <td>
+				        	<a href="#">생활안전 및 치안 만족도 향상 설문조사</a>
+				        </td>
 				        <td>2025-06-09</td>
 				        <td>2025-07-09</td>
 			    	</tr>
@@ -105,7 +133,7 @@
 	  		</table>
 		</div>
 		
-		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 500px;">		
+<%-- 		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 500px;">		 --%>
 	</div>
 	<!-- 본문 영역 종료 -->
 	
