@@ -1,5 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
   
+	// 상단 네비게이션 클릭 시 화면 출력
+	document.querySelectorAll(".init-nav a").forEach(link => {
+		link.addEventListener("click", function (e) {
+			e.preventDefault();
+			
+			// 모든 영역 숨김
+		    document.querySelectorAll(".basicInf, .question, .respInfo, .giftInfo, .closing, .complete")
+		      .forEach(section => section.classList.add("d-none"));
+		
+		    // 클릭한 영역 표시
+		    const targetSelector = this.getAttribute("data-target");
+		    const targetSection = document.querySelector(targetSelector);
+		    if (targetSection) {
+		      targetSection.classList.remove("d-none");
+		    }
+		
+		    // 나머지 네비에 색상 제거
+		    document.querySelectorAll(".init-nav a").forEach(a => {
+		      a.classList.remove("fw-bold", "text-primary");
+		    });
+		
+		    // 클릭한 네비에 색상 추가
+		    this.classList.add("fw-bold", "text-primary");
+		});
+	});  
+
 	//	'cancelBtn' 클릭 시 호출
 	const cancelBtn = document.getElementById("cancelBtn").addEventListener("click", function () {
 		Swal.fire({
@@ -69,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	    document.getElementById("questionArea").insertAdjacentHTML("beforeend", questionHtml);
 	  });
 	});
+
+	
 });
 
 
@@ -142,5 +170,4 @@ function renumberQuestions() {
     if (btn) btn.setAttribute("onclick", `deleteQuestion(${num})`);
   });
 }
-
 

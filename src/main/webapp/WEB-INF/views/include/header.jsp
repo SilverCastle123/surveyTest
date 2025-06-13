@@ -18,7 +18,7 @@
         <a href="${pageContext.request.contextPath}/main.do" style="text-decoration: none; color: inherit;">
         	<img src="${pageContext.request.contextPath}/resources/img/initLogo.png" alt="인아이티_로고" style="width: 150px; height: auto;">
         </a>
-        설문 시스템
+        <strong>설문조사 시스템</strong>
     </h1>
     
 </header>

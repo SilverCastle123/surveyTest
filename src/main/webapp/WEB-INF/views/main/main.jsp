@@ -4,52 +4,6 @@
 
 <head>
 
-<!--  나중에 삭제  -->
-<style type="text/css">
-@keyframes runAndSquish {
-  0% {
-    left: 0;
-    transform: scaleX(1) scaleY(1);
-  }
-  10% {
-    transform: scaleX(1) scaleY(1.2);
-  }
-  20% {
-    transform: scaleX(1) scaleY(1);
-  }
-  45% {
-    left: calc(100% - 150px);
-    transform: scaleX(1) scaleY(1.2);
-  }
-  50% {
-    left: calc(100% - 150px);
-    transform: scaleX(-1) scaleY(1);
-  }
-  60% {
-    transform: scaleX(-1) scaleY(1.2);
-  }
-  70% {
-    transform: scaleX(-1) scaleY(1);
-  }
-  95% {
-    left: 0;
-    transform: scaleX(-1) scaleY(1.2);
-  }
-  100% {
-    left: 0;
-    transform: scaleX(1) scaleY(1);
-  }
-}
-
-.popcat-run {
-  position: absolute;
-  top: 100px;
-  width: 150px;
-  animation: runAndSquish 10s ease-in-out infinite;
-}
-
-</style>
- 
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css">
 	
@@ -70,7 +24,7 @@
 		</div>
 		
 		<div class="bg-light p-4 mb-3 text-end">
-			<button type="button" class="init-btn" id="createFormBtn">+ 설문조사 작성</button>
+			<button type="button" class="init-btn" id="createFormBtn">+ 설문지 작성</button>
 		</div>
 		
 		<div class="table-responsive"> <!-- 추후 동적 코드로 수정 -->
@@ -78,9 +32,10 @@
 		    	<thead class="table-light">
 		      		<tr>
 				        <th scope="col">No</th>
-				        <th scope="col">설문 제목</th>
-				        <th scope="col">설문 개시일</th>
-				        <th scope="col">설문 마감일</th>
+				        <th scope="col">설문조사명</th>
+				        <th scope="col">설문조사 개시일</th>
+				        <th scope="col">설문조사 마감일</th>
+				        <th scope="col">응답현황</th>
 		      		</tr>
 		    	</thead>
 		    	<tbody>
@@ -92,6 +47,7 @@
 				        </td>
 				        <td>2025-06-12</td>
 				        <td>2025-07-12</td>
+				        <td></td>
 			    	</tr>
 		        	<tr>
 		        		<td hidden="true">S00371</td>
@@ -101,6 +57,7 @@
 				        </td>
 				        <td>2025-05-01</td>
 				        <td>2025-06-28</td>
+				        <td></td>
 			    	</tr>
 		        	<tr>
 		        		<td hidden="true">S00082</td>
@@ -110,6 +67,7 @@
 				        </td>
 				        <td>2025-06-03</td>
 				        <td>2025-07-03</td>
+				        <td></td>
 			    	</tr>
 		        	<tr>
 		        		<td hidden="true">S02091</td>
@@ -119,6 +77,7 @@
 				        </td>
 				        <td>2025-05-01</td>
 				        <td>2025-06-28</td>
+				        <td></td>
 			    	</tr>
 		        	<tr>
 		        		<td hidden="true">S01904</td>
@@ -128,12 +87,13 @@
 				        </td>
 				        <td>2025-06-09</td>
 				        <td>2025-07-09</td>
+				        <td></td>
 			    	</tr>
 		    	</tbody>
 	  		</table>
 		</div>
 		
-<%-- 		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 500px;">		 --%>
+		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 100px; width: 100px;">		
 	</div>
 	<!-- 본문 영역 종료 -->
 	
