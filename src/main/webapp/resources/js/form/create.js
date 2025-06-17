@@ -171,3 +171,57 @@ function renumberQuestions() {
   });
 }
 
+
+
+
+document.getElementById("saveSurveyBtn").addEventListener("click", function () {
+  console.log("저장 버튼 클릭됨");
+
+  const title = document.getElementById("searchText").value.trim();
+  const description = document.querySelector(".basicInf textarea").value.trim();
+  console.log("title:", title, "description:", description);
+
+  if (!title) {
+    Swal.fire("설문 제목을 입력해주세요.");
+    return;
+  }
+
+  const questions = [];
+
+  document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
+    const type = el.querySelector("h3")?.textContent || "주관식";
+    const input = el.querySelector("input");
+    const questionText = input ? input.value.trim() : `문항 ${index + 1}`;
+
+    questions.push({
+      order: index + 1,
+      type: type,
+      content: questionText
+    });
+  });
+
+  const data = {
+    title: title,
+    description: description,
+    questions: questions
+  };
+
+  console.log("전송 데이터:", data);
+
+  $.ajax({
+    type: "POST",
+    url: contextPath + "/api/surveys/with-questions",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+    success: function (response) {
+      console.log("서버 응답:", response);
+      Swal.fire("설문이 저장되었습니다.", "", "success").then(() => {
+        location.href = contextPath + "/main.do";
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("AJAX 에러:", status, error);
+      Swal.fire("저장 중 오류가 발생했습니다.", "", "error");
+    }
+  });
+});

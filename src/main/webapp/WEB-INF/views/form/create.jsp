@@ -57,8 +57,10 @@
 				<div id="questionArea">
 	    			<strong>설문지 작성 페이지</strong>
 	  			</div>
+	  			<button type="button" class="btn btn-primary" id="saveSurveyBtn">설문 저장</button>
 			</div>
 		</div>
+		
 		
 		<!-- 응답자 정보 -->
 		<div class="respInfo d-none">
