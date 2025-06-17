@@ -14,7 +14,8 @@ import java.util.List;
 public class Survey {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "survey_seq_gen")
+    @SequenceGenerator(name = "survey_seq_gen", sequenceName = "SURVEY_SEQ", allocationSize = 1)
     private Long id;
 
     private String title;
