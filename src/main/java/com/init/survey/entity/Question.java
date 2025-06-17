@@ -15,6 +15,7 @@ public class Question {
     @SequenceGenerator(name = "question_seq_gen", sequenceName = "QUESTION_SEQ", allocationSize = 1)
     private Long id;
 
+    @Column(name = "question_order")
     private int order;
 
     private String type;

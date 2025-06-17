@@ -17,7 +17,7 @@ import java.util.List;
 */
 
 @RestController
-@RequestMapping("/survey/api/surveys")
+@RequestMapping("/api/surveys")
 @RequiredArgsConstructor
 public class SurveyController {
 

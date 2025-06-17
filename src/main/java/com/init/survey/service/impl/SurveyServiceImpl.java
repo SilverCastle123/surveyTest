@@ -60,18 +60,18 @@ public class SurveyServiceImpl implements SurveyService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        Survey savedSurvey = surveyRepository.save(survey);
-
         List<Question> questions = request.getQuestions().stream()
                 .map(q -> Question.builder()
-                        .survey(savedSurvey)
                         .order(q.getOrder())
                         .type(q.getType())
                         .content(q.getContent())
+                        .survey(survey)
                         .build())
                 .collect(Collectors.toList());
 
-        questionRepository.saveAll(questions);
+        survey.setQuestions(questions);
+
+        surveyRepository.save(survey);
     }
 
     private SurveyDTO convertToDTO(Survey survey) {
@@ -80,6 +80,15 @@ public class SurveyServiceImpl implements SurveyService {
                 .title(survey.getTitle())
                 .description(survey.getDescription())
                 .createdAt(survey.getCreatedAt())
+                .questions(
+                    survey.getQuestions().stream()
+                        .map(q -> SurveyDTO.QuestionDTO.builder()
+                                .order(q.getOrder())
+                                .type(q.getType())
+                                .content(q.getContent())
+                                .build())
+                        .collect(Collectors.toList())
+                )
                 .build();
     }
     

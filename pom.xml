@@ -183,7 +183,10 @@
 		</dependency>
 		
 
-
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		</dependency>
 		
 		<!-- Lombok (Getter/Setter, Constructor 등 코드 생략 가능) -->
 		<dependency>
