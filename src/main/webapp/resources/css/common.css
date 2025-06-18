@@ -1,19 +1,19 @@
 @charset "UTF-8";
 
 html, body {
-  height: 100%;
-  margin: 0;
+	height: 100%;
+	margin: 0;
 }
 
 .wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .content {
-  flex: 1;
-  margin: 20px;
+	flex: 1;
+	margin: 20px;
 }
 
 /* 공통 카드 스타일 */
@@ -59,42 +59,67 @@ html, body {
     opacity: 0.6;
 }
 
+/* 회사 로고기반 파란색 테마 */
+.init-btn.logo {
+	background-color: #1565c0;
+  	border-color: #1565c0;
+  	color: #fff;
+}
+
+.init-btn.logo:hover {
+	background-color: #0d47a1;
+	border-color: #0d47a1;
+	color: #fff;
+}
+
+.init-btn.logo:active {
+	transform: scale(0.95);
+}
+
+.init-btn.logo:disabled {
+	background-color: #cfd8dc;
+	border-color: #b0bec5;
+	color: #666;
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
 
 /* 현위치 네이게이션 스타일 */
 .init-nav ol {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #555;
-  padding: 0;
-  margin: 0;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: #555;
+	padding: 0;
+	margin: 0;
 }
 
 .init-nav li {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 
 .init-nav li + li::before {
-  content: "›";
-  padding: 0 8px;
-  color: #999;
-  font-size: 14px;
+	content: "›";
+	padding: 0 8px;
+	color: #999;
+	font-size: 14px;
 }
 
 .init-nav a {
-  color: #444;
-  text-decoration: none;
+	color: #444;
+	text-decoration: none;
 }
 
 .init-nav a:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .init-nav strong {
-  color: #000;
-  font-weight: 600;
+	color: #000;
+	font-weight: 600;
 }
 

@@ -14,11 +14,13 @@
  	const contextPath = "${pageContext.request.contextPath}";
 </script>    
     
-    <h1 style="margin: 0; font-size: 20px; color: #333;">
-        <a href="${pageContext.request.contextPath}/main.do" style="text-decoration: none; color: inherit;">
+    <div class="headerTitle d-flex align-items-center gap-2 mb-2">
+		<a href="${pageContext.request.contextPath}/main.do" style="text-decoration: none; color: inherit;">
         	<img src="${pageContext.request.contextPath}/resources/img/initLogo.png" alt="인아이티_로고" style="width: 150px; height: auto;">
         </a>
-        <strong>설문조사 시스템</strong>
-    </h1>
+        <h1 class="ms-2" style="margin: 0; font-size: 20px; color: #333;">
+        	<strong>설문조사 시스템</strong>
+        </h1>
+    </div>
     
 </header>
