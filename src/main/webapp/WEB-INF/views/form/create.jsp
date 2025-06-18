@@ -57,7 +57,7 @@
 				<div id="questionArea">
 	    			<strong>설문지 작성 페이지</strong>
 	  			</div>
-	  			<button type="button" class="btn btn-primary" id="saveSurveyBtn">설문 저장</button>
+	  			<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn" style="width: max-content;">설문 저장</button>
 			</div>
 		</div>
 		

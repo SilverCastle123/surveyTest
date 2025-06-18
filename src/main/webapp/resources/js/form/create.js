@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", initSurveyApp);
 
 let questionNum = 0; // 문항 번호 매기는용 변수
 
-
 function initSurveyApp() {
 	bindTopNav(); 				// 상단 네비 호출
 	cancelSurvey(); 			// 설문지 작성취소 호출
 	bindCreateQuestion(); 		// 문항 추가 호출
 	deleteQuestion();			// 문항 삭제 호출
 	bindDragEvent();			// 드래그 이벤트 호출
+	bindRadioChoice();				// 객관식 관련 호출
 }
 
 
@@ -68,38 +68,116 @@ function bindCreateQuestion(){
 	    let questionHtml = "";
 	
 	    if (type === "objectV") {
-	      	// 객관식 세로 문항
-	      	questionHtml = `
-			<div class="card p-3 mb-3 draggable" data-question="${questionNum}" data-type="objectV" draggable="true">
-				<div class="mb-2 fw-bold">문항 ${questionNum} [객관식,세로]</div>
-				<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn">삭제</button>
+	      	// 객관식 '세로' 문항 --------------------------------------------------------------------
+	      	questionHtml =`
+			<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="objectV">
+				
+				<!-- 문항 헤더 -->
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<div class="fw-bold">문항 ${questionNum} [객관식,세로]</div>
+					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
+				</div>
+				
+				<!-- 문항 제목 영역 -->
+				<input type="text" name="question_${questionNum}" class="form-control mb-2" placeholder="질문 내용을 입력하세요">
+				
+				<!-- 보기 영역 -->
+			    <div class="choice-list mb-2">
+			    	${[1,2].map(() => `
+					    <div class="d-flex align-items-center mb-1 choice-item">
+					    	<input type="radio" disabled class="me-2">
+					    	<input type="text" class="form-control me-2" placeholder="보기 내용을 입력하세요">
+					    	<button type="button" class="btn btn-sm btn-outline-danger delete-choice-btn">✕</button>
+					    </div>
+					`).join('')}
+			    </div>
+			    
+				<!-- 버튼 영역 -->
+				<div class="choice-btn">
+					<button type="button" class="btn btn-sm btn-outline-secondary add-choice-btn">+ 보기 추가</button>
+					<button type="button" class="btn btn-sm btn-danger delete-btn">문항 삭제</button>
+				</div>
 			</div>
 	      	`;
 	    } else if (type === "objectH") {
-	      	// 객관식 가로 문항
-	      	questionHtml = `
-			<div class="card p-3 mb-3 draggable" data-question="${questionNum}" data-type="objectH" draggable="true">
-				<div class="mb-2 fw-bold">문항 ${questionNum} [객관식,가로]</div>
-				<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn">삭제</button>
+	      	// 객관식 '가로' 문항 ---------------------------------------------------------------------
+	      	questionHtml =`
+			<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="objectH">
+				
+				<!-- 문항 헤더 -->
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<div class="fw-bold">문항 ${questionNum} [객관식,세로]</div>
+					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
+				</div>
+				
+				<!-- 문항 제목 영역 -->
+				<input type="text" name="question_${questionNum}" class="form-control mb-2" placeholder="질문 내용을 입력하세요">
+				
+				<!-- 보기 영역 -->
+			    <div class="choice-list d-flex flex-wrap gap-2 mb-2">
+			    	${[1,2].map(() => `
+					    <div class="d-flex align-items-center choice-item">
+					    	<input type="radio" disabled class="me-2">
+					    	<input type="text" class="form-control me-2" placeholder="보기 내용을 입력하세요">
+					    	<button type="button" class="btn btn-sm btn-outline-danger delete-choice-btn">✕</button>
+					    </div>
+					`).join('')}
+			    </div>
+			    
+				<!-- 버튼 영역 -->
+				<div class="choice-btn">
+					<button type="button" class="btn btn-sm btn-outline-secondary add-choice-btn">+ 보기 추가</button>
+					<button type="button" class="btn btn-sm btn-danger delete-btn">문항 삭제</button>
+				</div>
 			</div>
 	      	`;
 	    } else if (type === "subject") {
-	      	// 주관식 가로 문항
+	      	// 주관식 문항 ---------------------------------------------------------------------------
 	      	questionHtml = `
-			<div class="card p-3 mb-3 draggable" data-question="${questionNum}" data-type="subject" draggable="true">
-	        	<div class="mb-2 fw-bold">문항 ${questionNum} [주관식]</div>
+			<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="subject">
+				
+				<!-- 문항 헤더 -->
+				<div class="d-flex justify-content-between align-items-center mb-2">
+	        		<div class="mb-2 fw-bold">문항 ${questionNum} [주관식]</div>
+	        		<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
+	        	</div>
+	        	
+	        	<!-- 문항 제목 영역 -->
 	          	<input type="text" name="question_${questionNum}" class="form-control mb-2" placeholder="질문 내용을 입력하세요">
-	          	<textarea class="form-control" placeholder="답변 입력란"></textarea>
-	          	<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn")">삭제</button>
+	          	
+	          	<!-- 응답 영역 -->
+          		<textarea class="form-control" placeholder="답변 입력란" disabled></textarea>
+				
+				<!-- 버튼 영역 -->
+				<div class="choice-btn">
+	          		<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn")">문항 삭제</button>
+	          	</div>	
 	        </div>
 	      	`;
 
 	    } else if (type === "grid") {
-	      	// 그리드 문항
+	      	// 그리드 문항 ----------------------------------------------------------------------------
 	      	questionHtml = `
-	      	<div class="card p-3 mb-3 draggable" data-question="${questionNum}" data-type="grid" draggable="true">
-				<div class="mb-2 fw-bold">문항 ${questionNum} [그리드]</div>
-				<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn">삭제</button>
+	      	<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="grid">
+	      		
+	      		<!-- 문항 헤더 -->
+	      		<div class="d-flex justify-content-between align-items-center mb-2">
+					<div class="mb-2 fw-bold">문항 ${questionNum} [그리드]</div>
+					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
+				</div>
+				
+				<!-- 문항 제목 영역 -->
+				<input type="text" name="question_${questionNum}" class="form-control mb-2" placeholder="질문 내용을 입력하세요">
+				
+				<!-- 그리드 영역 -->
+				<div class="choice-list mb-2">
+					<strong style="color:red;">작성예정...</strong>
+				</div>
+				
+				<!-- 버튼 영역 -->
+				<div class="choice-btn">
+					<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn">문항 삭제</button>
+				</div>
 			</div>
 	      	`;
 	    }
@@ -140,15 +218,22 @@ function deleteQuestion(){
 	
 function bindDragEvent(){
 	document.addEventListener("dragstart", function (e) {
-		if (e.target.classList.contains("draggable")) {
-		e.target.classList.add("dragging");
+		const handle = e.target.closest(".drag-handle");
+		if (!handle) return;
+		
+		const card = handle.closest(".draggable");
+		if (card) {
+			e.dataTransfer.effectAllowed = "move";
+			e.dataTransfer.setData("text/plain", "");
+			card.classList.add("dragging");
 		}
 	});
 	
-	document.addEventListener("dragend", function (e) {
-		if (e.target.classList.contains("draggable")) {
-		e.target.classList.remove("dragging");
-		renumberQuestions();
+	document.addEventListener("dragend", function () {
+		const card = document.querySelector(".dragging");
+		if (card) {
+			card.classList.remove("dragging");
+			renumberQuestions();
 		}
 	});
 
@@ -173,7 +258,6 @@ function bindDragEvent(){
 			return offset < 0 && offset > closest.offset ? { offset, element: el } : closest;
 		}, { offset: Number.NEGATIVE_INFINITY }).element;
 	}
-
 }
 
 
@@ -208,6 +292,45 @@ function renumberQuestions() {
     }
   });
 }
+
+
+function bindRadioChoice(){
+	// 보기추가 코드 
+	document.getElementById("questionArea").addEventListener("click", function (e) {
+	  if (e.target.classList.contains("add-choice-btn")) {
+	    const wrapper = e.target.closest(".draggable");
+	    const choiceList = wrapper.querySelector(".choice-list");
+	
+	    const choiceItem = document.createElement("div");
+	    choiceItem.className = "d-flex align-items-center mb-1 choice-item";
+	    choiceItem.innerHTML = `
+  		<input type="radio" disabled class="me-2">
+  		<input type="text" class="form-control me-2" placeholder="보기 내용을 입력하세요">
+		<button type="button" class="btn btn-sm btn-outline-danger delete-choice-btn">✕</button>
+	    `;
+	    choiceList.appendChild(choiceItem);
+	  }
+	});
+	
+	// 보기삭제 코드
+	document.getElementById("questionArea").addEventListener("click", function (e) {
+		if (e.target.classList.contains("delete-choice-btn")) {
+			const wrapper = e.target.closest(".draggable");
+			const items = wrapper.querySelectorAll(".choice-item");
+			if (items.length <= 2) {
+				Swal.fire({
+					title: "최소 2개 필요합니다",
+					icon: "error"
+				});
+				return;
+			}
+			const item = e.target.closest(".choice-item");
+			if (item) item.remove();
+		}
+	});
+};
+
+
 
 
 document.getElementById("saveSurveyBtn").addEventListener("click", function () {
