@@ -153,6 +153,12 @@
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc-14.jar</systemPath>
         </dependency>
         -->
+        <dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>19.3.0.0</version>
+		</dependency>
+        
         
         <!-- Spring Boot Starter Data JPA -->
 		<dependency>
@@ -210,12 +216,6 @@
 		    <version>2.1.1</version>
 		</dependency>
 		
-		<dependency>
-    		<groupId>oracle</groupId>
-    		<artifactId>ojdbc6</artifactId>
-    		<version>11.2.0.3</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>yasson</artifactId>
