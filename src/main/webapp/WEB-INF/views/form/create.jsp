@@ -36,7 +36,7 @@
 		
 		<!-- 기본정보 등록 -->
 		<div class="basicInf">
-			<div class="card" style="width: 50%; height: auto;">
+			<div class="card" style="width: 70%; height: auto;">
 				<div id="informationArea">
 					<div class="mb-4">
 						<h5 class="fw-bold">설문지 제목을 입력해주세요</h5>
@@ -53,7 +53,7 @@
 		
 		<!-- 설문지 작성 -->
 		<div class="question d-none">
-			<div class="card" style="width: 50%; height: auto;">
+			<div class="card" style="width: 70%; height: auto;">
 				<div id="questionArea">
 	    			<strong>설문지 작성 페이지</strong>
 	  			</div>
@@ -64,7 +64,7 @@
 		
 		<!-- 응답자 정보 -->
 		<div class="respInfo d-none">
-			<div class="card" style="width: 50%; height: auto;">
+			<div class="card" style="width: 70%; height: auto;">
 				<div id="respInfoArea">
 	    			<strong>응답자 정보 페이지</strong>
 	  			</div>
@@ -73,7 +73,7 @@
 		
 		<!-- 경품 추첨 -->
 		<div class="giftInfo d-none">
-			<div class="card" style="width: 50%; height: auto;">
+			<div class="card" style="width: 70%; height: auto;">
 				<div id="giftInfoArea">
 	    			<strong>경품 추첨 페이지</strong>
 	  			</div>
@@ -82,7 +82,7 @@
 		
 		<!-- 맺음말 작성 -->
 		<div class="closing d-none">
-			<div class="card" style="width: 50%; height: auto;">
+			<div class="card" style="width: 70%; height: auto;">
 				<div id="closingArea">
 	    			<strong>맺음말 작성 페이지</strong>
 	  			</div>
@@ -91,7 +91,7 @@
 		
 		<!-- 완료 -->
 		<div class="complete d-none">
-			<div class="card" style="width: 50%; height: auto;">
+			<div class="card" style="width: 70%; height: auto;">
 				<div id="completeArea">
 	    			<strong>완료 페이지</strong>
 	  			</div>
