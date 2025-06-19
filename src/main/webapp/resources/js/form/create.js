@@ -480,6 +480,10 @@ function bindGridQuestion() {
 }
 
 
+
+
+
+
 document.getElementById("saveSurveyBtn").addEventListener("click", function () {
   console.log("저장 버튼 클릭됨");
 
@@ -494,49 +498,58 @@ document.getElementById("saveSurveyBtn").addEventListener("click", function () {
 
   const questions = [];
 
+
 document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
-  // data-type 속성에서 타입 정보 추출
   const type = el.getAttribute("data-type") || "subject";
-  let questionText = "";
+  const questionInput = el.querySelector("input");
+  const questionText = questionInput ? questionInput.value.trim() : `문항 ${index + 1}`;
 
-  if (type === "subject") {
-    const input = el.querySelector("input");
-    questionText = input ? input.value.trim() : `문항 ${index + 1}`;
-  } else {
-    // 주관식 이외 타입은 제목(h3) 대신 "문항 번호" 등으로 처리 가능
-    questionText = `문항 ${index + 1}`;
-  }
-
-  questions.push({
+  const questionData = {
     order: index + 1,
     type: type,
     content: questionText
-  });
-});
-
-  const data = {
-    title: title,
-    description: description,
-    questions: questions
   };
 
-  console.log("전송 데이터:", data);
-  console.log('contextPath:', contextPath);
+  // 객관식 보기 항목 수집
+  if (type === "objectV" || type === "objectH") {
+    const choices = [];
+    el.querySelectorAll(".choice-list .choice-item").forEach((item) => {
+      const choiceText = item.querySelector("input[type='text']").value.trim();
+      if (choiceText) {
+        choices.push({ content: choiceText });
+      }
+    });
+    questionData.choices = choices;
+  }
 
-  $.ajax({
-    type: "POST",
-    url: contextPath + "/api/surveys/with-questions",
-    contentType: "application/json",
-    data: JSON.stringify(data),
-    success: function (response) {
-      console.log("서버 응답:", response);
-      Swal.fire("설문이 저장되었습니다.", "", "success").then(() => {
-        location.href = contextPath + "/main.do";
-      });
-    },
-    error: function (xhr, status, error) {
-      console.error("AJAX 에러:", status, error);
-      Swal.fire("저장 중 오류가 발생했습니다.", "", "error");
-    }
-  });
+  // 한 번만 push (중복 방지)
+  questions.push(questionData);
+});
+
+const data = {
+  title: title,
+  description: description,
+  questions: questions
+};
+
+console.log("전송 데이터:", data);
+console.log('contextPath:', contextPath);
+
+$.ajax({
+  type: "POST",
+  url: contextPath + "/api/surveys/with-questions",
+  contentType: "application/json",
+  data: JSON.stringify(data),
+  success: function (response) {
+    console.log("서버 응답:", response);
+    Swal.fire("설문이 저장되었습니다.", "", "success").then(() => {
+      location.href = contextPath + "/main.do";
+    });
+  },
+  error: function (xhr, status, error) {
+    console.error("AJAX 에러:", status, error);
+    Swal.fire("저장 중 오류가 발생했습니다.", "", "error");
+  }
+});
+
 });
