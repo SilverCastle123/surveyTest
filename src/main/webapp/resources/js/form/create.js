@@ -4,13 +4,13 @@ let questionNum = 0; // 문항 번호 매기는용 변수
 
 function initSurveyApp() {
 	bindTopNav(); 				// 상단 네비 호출
-	cancelSurvey(); 			// 설문지 작성취소 호출
 	bindCreateQuestion(); 		// 문항 추가 호출
 	deleteQuestion();			// 문항 삭제 호출
 	bindDragEvent();			// 드래그 이벤트 호출
 	bindRadioChoice();			// 객관식 관련 호출
 	bindGridQuestion();			// 그리드 레이아웃 호출
 	getGridQuestionHtml()		// 그리드 문항상세 호출
+	
 }
 
 
@@ -20,7 +20,7 @@ function bindTopNav() {
 			e.preventDefault();
 			
 			// 모든 영역 숨김
-			document.querySelectorAll(".basicInf, .question, .respInfo, .giftInfo, .closing, .complete")
+			document.querySelectorAll(".basicInf, .question, .respInfo, .closing, .complete")
 			.forEach(section => section.classList.add("d-none"));
 				
 			// 클릭한 영역 표시
@@ -37,26 +37,21 @@ function bindTopNav() {
 				
 			// 클릭한 네비에 색상 추가
 			this.classList.add("fw-bold", "text-primary");
-		});
-	});
-}
-
-
-function cancelSurvey(){
-	document.getElementById("cancelBtn").addEventListener("click", function () {
-		Swal.fire({
-			title: '작성을 취소하시겠습니까?',
-			text: "작성 중인 작업이 저장되지 않았습니다.",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#aaa',
-			confirmButtonText: '확인',
-			cancelButtonText: '취소'
-			}).then((result) => {
-			if (result.isConfirmed) {
-			location.href = contextPath + "/main.do";
-			}
+			
+			// 컨트롤러 표시/숨김 제어
+		    const questionCtrl = document.getElementById("questionCtrl");
+		    const respInfoCtrl = document.getElementById("respInfoCtrl");
+		
+		    if (targetSelector === ".question") {
+		    	questionCtrl.classList.remove("d-none");
+		        respInfoCtrl.classList.add("d-none");
+		    } else if (targetSelector === ".respInfo") {
+		        questionCtrl.classList.add("d-none");
+		        respInfoCtrl.classList.remove("d-none");
+		    } else {
+		        questionCtrl.classList.add("d-none");
+		        respInfoCtrl.classList.add("d-none");
+		    }
 		});
 	});
 }
@@ -161,8 +156,8 @@ function bindCreateQuestion(){
 	      	// 그리드 문항 ----------------------------------------------------------------------------
 	      	questionHtml = getGridQuestionHtml(questionNum, "agree", 5); // "satisfy", "truth" // "5", "7"
 	    }
-	
 	    document.getElementById("questionArea").insertAdjacentHTML("beforeend", questionHtml);
+	    updateSaveButtonVisibility();
 	  });
 	});
 }
@@ -189,11 +184,28 @@ function deleteQuestion(){
 				if (result.isConfirmed) {
 					card.remove();
 					renumberQuestions();
+					updateSaveButtonVisibility();
 				}
 			});
 		}
 	});
 }
+	
+
+// 문항이 하나도 없을 때 '설문저장' 버튼 숨김
+function updateSaveButtonVisibility() {
+  const hasQuestions = document.querySelectorAll("#questionArea .draggable").length > 0;
+  const notice = document.getElementById("questionNotice");
+  const saveWrap = document.getElementById("saveSurveyWrap");
+
+  if (hasQuestions) {
+    notice.classList.add("d-none");
+    saveWrap.classList.remove("d-none");
+  } else {
+    notice.classList.remove("d-none");
+    saveWrap.classList.add("d-none");
+  }
+}	
 	
 	
 function bindDragEvent(){

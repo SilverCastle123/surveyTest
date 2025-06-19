@@ -27,6 +27,21 @@ html, body {
     width: auto;
 }
 
+/* 우측 고정 컨트롤러 공통 스타일 */
+.ctrl-panel {
+	position: fixed;
+	top: 50%;
+	right: 32px;
+	transform: translateY(-50%);
+	width: 300px;
+	z-index: 1000;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	padding: 24px;
+}
+
 /* 공통 버튼 스타일 */
 .init-btn {
     height: 35px;

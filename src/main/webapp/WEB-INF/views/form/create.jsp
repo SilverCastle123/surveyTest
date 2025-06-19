@@ -28,7 +28,6 @@
 			    <li><a href="#" data-target=".basicInf" class="fw-bold text-primary">기본정보 등록</a></li>
 			    <li><a href="#" data-target=".question">설문지 작성</a></li>
 			    <li><a href="#" data-target=".respInfo">응답자 정보</a></li>
-			    <li><a href="#" data-target=".giftInfo">경품 추첨</a></li>
 			    <li><a href="#" data-target=".closing">맺음말 작성</a></li>
 			    <li><a href="#" data-target=".complete">완료</a></li>
 			</ol>
@@ -38,15 +37,16 @@
 		<div class="basicInf">
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="informationArea">
-					<div class="mb-4">
-						<h5 class="fw-bold">설문지 제목을 입력해주세요</h5>
-						<input type="text" class="form-control" placeholder="설문지 제목" id="searchText">
-					</div>
-					<div class="mb-3">
-						<h5 class="fw-bold">설문지 인사말을 입력해주세요</h5>
-						<h6 class="text-danger">※ 설문 목적이나 참여 방법 등을 간단히 안내하고 싶다면 인사말을 작성해 주세요</h6>
-						<textarea class="form-control" rows="5" cols="" placeholder="소중한 의견 부탁드립니다."></textarea>
-					</div>
+					<h5 class="fw-bold mb-3">기본정보 등록</h5>
+				    <div class="alert alert-info small mb-3">
+				    	※ 설문지 제목을 입력해주세요.
+				    </div>
+					<input type="text" class="form-control mb-3" placeholder="설문지 제목" id="searchText">
+					
+					<div class="alert alert-info small mb-3">
+				    	※ 설문 목적이나 참여 방법 등을 간단히 안내하는 인사말을 작성해 주세요.
+				    </div>
+					<textarea class="form-control" rows="5" cols="" placeholder="소중한 의견 부탁드립니다."></textarea>
 				</div>
 			</div>
 		</div>
@@ -55,36 +55,40 @@
 		<div class="question d-none">
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="questionArea">
-	    			<strong>설문지 작성 페이지</strong>
+					<h5 class="fw-bold mb-3">설문지 작성</h5>
 	  			</div>
-	  			<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn" style="width: max-content;">설문 저장</button>
+	  			
+	  			<div class="d-flex justify-content-center">
+	  				<div class="alert alert-danger small mb-3" id="questionNotice">
+	  					우측 패널을 이용하여 설문 문항을 등록하여주세요.
+	  				</div>
+	  				<div class="saveBtn d-none" id="saveSurveyWrap">
+		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">설문 저장</button>
+	  				</div>
+	  			</div>	
 			</div>
 		</div>
 		
 		
-		<!-- 응답자 정보 -->
+		<!-- 응답자 정보 (인구통계적 항목), 경품 -->
 		<div class="respInfo d-none">
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="respInfoArea">
-	    			<strong>응답자 정보 페이지</strong>
+					<h5 class="fw-bold mb-3">응답자 정보</h5>
 	  			</div>
 			</div>
 		</div>
 		
-		<!-- 경품 추첨 -->
-		<div class="giftInfo d-none">
-			<div class="card" style="width: 70%; height: auto;">
-				<div id="giftInfoArea">
-	    			<strong>경품 추첨 페이지</strong>
-	  			</div>
-			</div>
-		</div>
-		
+
 		<!-- 맺음말 작성 -->
 		<div class="closing d-none">
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="closingArea">
-	    			<strong>맺음말 작성 페이지</strong>
+					<h5 class="fw-bold mb-3">설문지 맺음말</h5>
+				    <div class="alert alert-info small mb-3">
+				    	※ 응답자에게 마지막으로 전달할 감사 메시지를 입력해 주세요.
+				    </div>
+      				<textarea class="form-control" rows="5" id="closingMessage" placeholder="소중한 의견을 주셔서 감사합니다.&#10;귀하의 응답은 저희 서비스 개선에 활용될 예정입니다."></textarea>
 	  			</div>
 			</div>
 		</div>
@@ -93,18 +97,31 @@
 		<div class="complete d-none">
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="completeArea">
-	    			<strong>완료 페이지</strong>
+					<h5 class="fw-bold mb-3">완료</h5>
 	  			</div>
 			</div>
 		</div>
 		
-		<div class="card" style="position: fixed; top: 50%; right: 32px; transform: translateY(-50%); width: 300px; z-index: 1000;">
-			<button type="button" class="init-btn addQuestionBtn mb-2" id="objectV">객관식 문항 (세로) 추가</button>
-			<button type="button" class="init-btn addQuestionBtn mb-2" id="objectH">객관식 문항 (가로) 추가</button>
-			<button type="button" class="init-btn addQuestionBtn mb-2" id="subject">주관식 문항 추가</button>
-			<button type="button" class="init-btn addQuestionBtn mb-2" id="grid">그리드 문항 추가</button>
-			<button type="button" class="init-btn" id="cancelBtn">설문지 작성 취소</button>
+		<!-- 설문지 작성 컨트롤러 -->
+		<div class="ctrl-panel d-none" id="questionCtrl">
+			<div class="d-flex flex-column align-items-center">
+				<button type="button" class="init-btn addQuestionBtn mb-2" id="objectV">객관식 문항 (세로) 추가</button>
+				<button type="button" class="init-btn addQuestionBtn mb-2" id="objectH">객관식 문항 (가로) 추가</button>
+				<button type="button" class="init-btn addQuestionBtn mb-2" id="subject">주관식 문항 추가</button>
+				<button type="button" class="init-btn addQuestionBtn mb-2" id="grid">그리드 문항 추가</button>
+			</div>
 		</div>
+
+		<!-- 응답자 정보 컨트롤러 -->
+		<div class="ctrl-panel d-none" id="respInfoCtrl">
+			<div class="d-flex flex-column align-items-center">
+				<button type="button" class="init-btn addrespInfoBtn mb-2" id="respInfoV">객관식 문항 (세로) 추가</button>
+				<button type="button" class="init-btn addrespInfoBtn mb-2" id="respInfoH">객관식 문항 (가로) 추가</button>
+				<button type="button" class="init-btn addrespInfoBtn mb-2" id="respInfoSub">주관식 문항 추가</button>
+			</div>
+		</div>
+		
+		
    	</div>
 	<!-- 본문 영역 종료 -->
 	
