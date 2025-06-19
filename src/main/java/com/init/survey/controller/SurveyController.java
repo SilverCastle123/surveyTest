@@ -6,9 +6,12 @@ import com.init.survey.service.SurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 /*
     설문지 컨트롤러
@@ -53,10 +56,18 @@ public class SurveyController {
 
     
     @PostMapping("/with-questions")
-    public ResponseEntity<String> saveSurvey(@RequestBody SurveySaveRequest request) {
+    public ResponseEntity<?> saveSurvey(@Valid @RequestBody SurveySaveRequest request,
+                                        BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // 에러 메시지 추출 (간단한 버전)
+            String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
         surveyService.saveSurveyWithQuestions(request);
         return ResponseEntity.ok("설문 저장 성공");
     }
+
 
     /**
      * 설문 삭제

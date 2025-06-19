@@ -2,8 +2,10 @@ package com.init.survey.entity;
 
 import javax.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Entity
+@Table(name = "SVY_QUESTION")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +28,8 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_id")
     private Survey survey;
+    
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Choice> choices;
+
 }

@@ -39,5 +39,17 @@ public class SurveySaveRequest {
 
         @NotBlank
         private String content;
+        
+        private List<ChoiceDTO> choices;
+        
+        @Getter
+        @Setter
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Builder
+        public static class ChoiceDTO {
+            @NotBlank
+            private String content;
+        }
     }
 }

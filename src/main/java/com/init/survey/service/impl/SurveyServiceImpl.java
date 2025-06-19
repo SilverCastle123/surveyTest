@@ -2,6 +2,7 @@ package com.init.survey.service.impl;
 
 import com.init.survey.dto.SurveyDTO;
 import com.init.survey.dto.SurveySaveRequest;
+import com.init.survey.entity.Choice;
 import com.init.survey.entity.Question;
 import com.init.survey.entity.Survey;
 import com.init.survey.repository.QuestionRepository;
@@ -61,17 +62,32 @@ public class SurveyServiceImpl implements SurveyService {
                 .build();
 
         List<Question> questions = request.getQuestions().stream()
-                .map(q -> Question.builder()
-                        .order(q.getOrder())
-                        .type(q.getType())
-                        .content(q.getContent())
-                        .survey(survey)
-                        .build())
+                .map(q -> {
+                    Question question = Question.builder()
+                            .order(q.getOrder())
+                            .type(q.getType())
+                            .content(q.getContent())
+                            .survey(survey)
+                            .build();
+
+                    // 선택형 문항일 경우 보기 추가
+                    if ((q.getType().equals("objectV") || q.getType().equals("objectH"))
+                            && q.getChoices() != null) {
+                        List<Choice> choices = q.getChoices().stream()
+                                .map(choiceDTO -> Choice.builder()
+                                        .content(choiceDTO.getContent())
+                                        .question(question)
+                                        .build())
+                                .collect(Collectors.toList());
+                        question.setChoices(choices);
+                    }
+
+                    return question;
+                })
                 .collect(Collectors.toList());
 
         survey.setQuestions(questions);
-
-        surveyRepository.save(survey);
+        surveyRepository.save(survey); // cascade로 question, choice도 함께 저장됨
     }
 
     private SurveyDTO convertToDTO(Survey survey) {
@@ -81,13 +97,13 @@ public class SurveyServiceImpl implements SurveyService {
                 .description(survey.getDescription())
                 .createdAt(survey.getCreatedAt())
                 .questions(
-                    survey.getQuestions().stream()
-                        .map(q -> SurveyDTO.QuestionDTO.builder()
-                                .order(q.getOrder())
-                                .type(q.getType())
-                                .content(q.getContent())
-                                .build())
-                        .collect(Collectors.toList())
+                        survey.getQuestions().stream()
+                                .map(q -> SurveyDTO.QuestionDTO.builder()
+                                        .order(q.getOrder())
+                                        .type(q.getType())
+                                        .content(q.getContent())
+                                        .build())
+                                .collect(Collectors.toList())
                 )
                 .build();
     }
