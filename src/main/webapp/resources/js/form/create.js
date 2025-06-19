@@ -8,7 +8,9 @@ function initSurveyApp() {
 	bindCreateQuestion(); 		// 문항 추가 호출
 	deleteQuestion();			// 문항 삭제 호출
 	bindDragEvent();			// 드래그 이벤트 호출
-	bindRadioChoice();				// 객관식 관련 호출
+	bindRadioChoice();			// 객관식 관련 호출
+	bindGridQuestion();			// 그리드 레이아웃 호출
+	getGridQuestionHtml()		// 그리드 문항상세 호출
 }
 
 
@@ -71,7 +73,7 @@ function bindCreateQuestion(){
 	      	// 객관식 '세로' 문항 --------------------------------------------------------------------
 	      	questionHtml =`
 			<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="objectV">
-				
+
 				<!-- 문항 헤더 -->
 				<div class="d-flex justify-content-between align-items-center mb-2">
 					<div class="fw-bold">문항 ${questionNum} [객관식,세로]</div>
@@ -93,7 +95,7 @@ function bindCreateQuestion(){
 			    </div>
 			    
 				<!-- 버튼 영역 -->
-				<div class="choice-btn">
+				<div class="d-flex justify-content-between align-items-center mt-2">
 					<button type="button" class="btn btn-sm btn-outline-secondary add-choice-btn">+ 보기 추가</button>
 					<button type="button" class="btn btn-sm btn-danger delete-btn">문항 삭제</button>
 				</div>
@@ -125,7 +127,7 @@ function bindCreateQuestion(){
 			    </div>
 			    
 				<!-- 버튼 영역 -->
-				<div class="choice-btn">
+				<div class="d-flex justify-content-between align-items-center mt-2">
 					<button type="button" class="btn btn-sm btn-outline-secondary add-choice-btn">+ 보기 추가</button>
 					<button type="button" class="btn btn-sm btn-danger delete-btn">문항 삭제</button>
 				</div>
@@ -149,7 +151,7 @@ function bindCreateQuestion(){
           		<textarea class="form-control" placeholder="답변 입력란" disabled></textarea>
 				
 				<!-- 버튼 영역 -->
-				<div class="choice-btn">
+				<div class="choice-btn text-end">
 	          		<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn")">문항 삭제</button>
 	          	</div>	
 	        </div>
@@ -157,29 +159,7 @@ function bindCreateQuestion(){
 
 	    } else if (type === "grid") {
 	      	// 그리드 문항 ----------------------------------------------------------------------------
-	      	questionHtml = `
-	      	<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="grid">
-	      		
-	      		<!-- 문항 헤더 -->
-	      		<div class="d-flex justify-content-between align-items-center mb-2">
-					<div class="mb-2 fw-bold">문항 ${questionNum} [그리드]</div>
-					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
-				</div>
-				
-				<!-- 문항 제목 영역 -->
-				<input type="text" name="question_${questionNum}" class="form-control mb-2" placeholder="질문 내용을 입력하세요">
-				
-				<!-- 그리드 영역 -->
-				<div class="choice-list mb-2">
-					<strong style="color:red;">작성예정...</strong>
-				</div>
-				
-				<!-- 버튼 영역 -->
-				<div class="choice-btn">
-					<button type="button" class="btn btn-sm btn-danger mt-2 delete-btn">문항 삭제</button>
-				</div>
-			</div>
-	      	`;
+	      	questionHtml = getGridQuestionHtml(questionNum, "agree", 5); // "satisfy", "truth" // "5", "7"
 	    }
 	
 	    document.getElementById("questionArea").insertAdjacentHTML("beforeend", questionHtml);
@@ -331,6 +311,162 @@ function bindRadioChoice(){
 };
 
 
+function getGridQuestionHtml(questionNum, scaleType = "agree", scaleSize = 5) {
+	// 척도 유형, 척도 몇 형인지 세팅
+	const scaleOptions = {
+		agree: {
+			label: "동의 여부",
+			labels: {
+				5: ["전혀 동의하지 않음", "동의하지 않음", "보통이다", "동의함", "매우 동의함"],
+				7: ["전혀 동의하지 않음", "약간 동의하지 않음", "동의하지 않음", "보통이다", "동의함", "약간 동의함", "매우 동의함"]
+			}
+		},
+		satisfy: {
+			label: "만족도",
+			labels: {
+				5: ["매우 불만족", "불만족", "보통이다", "만족", "매우 만족"],
+				7: ["매우 불만족", "다소 불만족", "불만족", "보통이다", "만족", "다소 만족", "매우 만족"]
+			}
+		},
+		truth: {
+			label: "사실 여부",
+			labels: {
+				5: ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"],
+				7: ["전혀 그렇지 않다", "약간 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "약간 그렇다", "매우 그렇다"]
+			}
+		}
+	};
+
+	const labels = scaleOptions[scaleType].labels[scaleSize];
+
+	let headerHtml = labels.map((label, i) => `
+		<th class="text-center">
+			<div>${label}</div>
+			<div>(${i + 1})</div>
+		</th>
+	`).join("");
+	
+	const rowHtml = `
+		<tr class="question-row">
+			<td class="d-flex align-items-center gap-1">
+				<button type="button" class="btn btn-sm btn-outline-danger delete-grid-row">✕</button>
+				<input type="text" class="form-control form-control-sm question-text" placeholder="질문 입력">
+			</td>
+			${labels.map((_, i) => `
+			<td class="text-center">
+				<input type="radio" name="grid_${questionNum}_row1" value="${i + 1}">
+			</td>`).join("")}
+		</tr>
+	`;
+	
+	return `
+	<div class="p-2 mt-3 draggable" data-question="${questionNum}" data-type="grid">
+	
+	<!-- 문항 헤더 -->
+	<div class="d-flex justify-content-between align-items-center mb-2">
+		<div class="mb-2 fw-bold">문항 ${questionNum} [그리드]</div>
+		<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
+	</div>
+	
+	<!-- 척도 설정 -->
+	<div class="d-flex align-items-center gap-2 mb-2">
+		<label>척도 유형:</label>
+		<select class="form-select form-select-sm w-auto grid-scale-type">
+			<option value="agree" ${scaleType === "agree" ? "selected" : ""}>동의 여부</option>
+			<option value="satisfy" ${scaleType === "satisfy" ? "selected" : ""}>만족도</option>
+			<option value="truth" ${scaleType === "truth" ? "selected" : ""}>사실 여부</option>
+		</select>
+	
+		<label>척도 수:</label>
+		<select class="form-select form-select-sm w-auto grid-scale-size">
+			<option value="5" ${scaleSize == 5 ? "selected" : ""}>5단</option>
+			<option value="7" ${scaleSize == 7 ? "selected" : ""}>7단</option>
+		</select>
+	</div>
+	
+	<!-- 그리드 테이블 -->
+	<div class="table-responsive">
+		<table class="table table-bordered text-center align-middle grid-table">
+			<thead>
+				<tr>
+					<th class="align-middle">
+						<input type="text" class="form-control form-control-sm question-text" placeholder="중분류 입력">
+					</th>
+					${headerHtml}
+				</tr>
+			</thead>
+			<tbody>
+				${rowHtml}
+			</tbody>
+		</table>
+		</div>
+		
+		<div class="d-flex justify-content-between align-items-center mt-2">
+			<button type="button" class="btn btn-sm btn-outline-secondary add-grid-row">+ 항목 추가</button>
+			<button type="button" class="btn btn-sm btn-danger delete-btn">문항 삭제</button>
+		</div>
+	</div>
+	`;
+}
+
+
+function bindGridQuestion() {
+	document.getElementById("questionArea").addEventListener("click", function (e) {
+		if (e.target.classList.contains("add-grid-row")) {
+			const card = e.target.closest(".draggable");
+			const table = card.querySelector(".grid-table tbody");
+			const questionNum = card.getAttribute("data-question");
+			const scaleSize = parseInt(card.querySelector(".grid-scale-size").value);
+			
+			const newRowIndex = table.querySelectorAll(".question-row").length + 1;
+			const rowHtml = document.createElement("tr");
+			rowHtml.className = "question-row";
+			
+			const textCell = document.createElement("td");
+			textCell.className = "d-flex align-items-center gap-1";
+			textCell.innerHTML = `
+			<button type="button" class="btn btn-sm btn-outline-danger delete-grid-row">✕</button>	
+			<input type="text" class="form-control form-control-sm question-text" placeholder="질문 입력">
+			`;
+			
+			rowHtml.appendChild(textCell);
+			for (let i = 1; i <= scaleSize; i++) {
+				const cell = document.createElement("td");
+				cell.className = "text-center";
+				cell.innerHTML = `<input type="radio" name="grid_${questionNum}_row${newRowIndex}" value="${i}">`;
+				rowHtml.appendChild(cell);
+			}
+			table.appendChild(rowHtml);
+		}
+		
+		// 그리드질문 삭제
+		if (e.target.classList.contains("delete-grid-row")) {
+			const row = e.target.closest("tr");
+			const tbody = row.closest("tbody");
+			const rowCount = tbody.querySelectorAll(".question-row").length;
+			if (rowCount <= 1) {
+				Swal.fire({
+					title: "최소 1개 필요합니다",
+					icon: "error"
+				});
+				return;
+			}
+			if (row) row.remove();
+		}
+	});
+	
+	document.getElementById("questionArea").addEventListener("change", function (e) {
+		if (e.target.classList.contains("grid-scale-type") || e.target.classList.contains("grid-scale-size")) {
+			const card = e.target.closest(".draggable");
+			const questionNum = card.getAttribute("data-question");
+			const type = card.querySelector(".grid-scale-type").value;
+			const size = parseInt(card.querySelector(".grid-scale-size").value);
+			const newHtml = getGridQuestionHtml(questionNum, type, size);
+			
+			card.outerHTML = newHtml;
+		}
+	});
+}
 
 
 document.getElementById("saveSurveyBtn").addEventListener("click", function () {
