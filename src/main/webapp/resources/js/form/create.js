@@ -10,6 +10,7 @@ function initSurveyApp() {
 	bindRadioChoice();			// 객관식 관련 호출
 	bindGridQuestion();			// 그리드 레이아웃 호출
 	getGridQuestionHtml()		// 그리드 문항상세 호출
+	
 }
 
 
