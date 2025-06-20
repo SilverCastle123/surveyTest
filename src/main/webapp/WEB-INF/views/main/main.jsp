@@ -68,7 +68,7 @@
 	  		</table>
 		</div>
 		
-		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 100px; width: 100px;">		
+<%-- 		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 100px; width: 100px;">		 --%>
 	</div>
 	<!-- 본문 영역 종료 -->
 	
