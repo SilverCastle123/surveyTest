@@ -26,9 +26,9 @@
 		<nav class="init-nav">
 	  		<ol>
 			    <li><a href="#" data-target=".basicInf" class="fw-bold text-primary">기본정보 등록</a></li>
-			    <li><a href="#" data-target=".question">설문지 작성</a></li>
+			    <li><a href="#" data-target=".question">설문문항 작성</a></li>
 			    <li><a href="#" data-target=".closing">맺음말 작성</a></li>
-			    <li><a href="#" data-target=".complete">마무리</a></li>
+			    <li><a href="#" data-target=".complete">최종확인</a></li>
 			</ol>
 		</nav>
 		
@@ -40,12 +40,12 @@
 				    <div class="alert alert-info small mb-3">
 				    	※ 설문지 제목을 입력해주세요.
 				    </div>
-					<input type="text" class="form-control mb-3" placeholder="설문지 제목" id="searchText">
+					<input type="text" class="form-control mb-3" placeholder="설문지 제목 작성.." id="searchText">
 					
 					<div class="alert alert-info small mb-3">
 				    	※ 설문 목적이나 참여 방법 등을 간단히 안내하는 인사말을 작성해 주세요.
 				    </div>
-					<textarea class="form-control" rows="5" cols="" placeholder="소중한 의견 부탁드립니다."></textarea>
+					<textarea class="form-control" rows="5" cols="" placeholder="인사말 작성.."></textarea>
 				</div>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 				    <div class="alert alert-info small mb-3">
 				    	※ 응답자에게 마지막으로 전달할 감사 메시지를 입력해 주세요.
 				    </div>
-      				<textarea class="form-control" rows="5" id="closingMessage" placeholder="소중한 의견을 주셔서 감사합니다.&#10;귀하의 응답은 저희 서비스 개선에 활용될 예정입니다."></textarea>
+      				<textarea class="form-control" rows="5" id="closingMessage" placeholder="맺음말 작성.."></textarea>
 	  			</div>
 			</div>
 		</div>
