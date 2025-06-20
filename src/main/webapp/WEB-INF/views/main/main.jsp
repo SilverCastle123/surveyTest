@@ -36,7 +36,7 @@
 				        <th scope="col">번호</th>
 				        <th scope="col">파일</th>
 				        <th scope="col">제목</th>
-				        <th scope="col">설문조사 개시일</th>
+				        <th scope="col">설문조사 게시일</th>
 				        <th scope="col">설문조사 마감일</th>
 				        <th scope="col">응답현황</th>
 		      		</tr>

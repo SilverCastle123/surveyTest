@@ -27,9 +27,8 @@
 	  		<ol>
 			    <li><a href="#" data-target=".basicInf" class="fw-bold text-primary">기본정보 등록</a></li>
 			    <li><a href="#" data-target=".question">설문지 작성</a></li>
-			    <li><a href="#" data-target=".respInfo">응답자 정보</a></li>
 			    <li><a href="#" data-target=".closing">맺음말 작성</a></li>
-			    <li><a href="#" data-target=".complete">완료</a></li>
+			    <li><a href="#" data-target=".complete">마무리</a></li>
 			</ol>
 		</nav>
 		
@@ -63,23 +62,12 @@
 	  					우측 패널을 이용하여 설문 문항을 등록하여주세요.
 	  				</div>
 	  				<div class="saveBtn d-none" id="saveSurveyWrap">
-		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">설문 저장</button>
+		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">임시저장</button>
 	  				</div>
 	  			</div>	
 			</div>
 		</div>
 		
-		
-		<!-- 응답자 정보 (인구통계적 항목), 경품 -->
-		<div class="respInfo d-none">
-			<div class="card" style="width: 70%; height: auto;">
-				<div id="respInfoArea">
-					<h5 class="fw-bold mb-3">응답자 정보</h5>
-	  			</div>
-			</div>
-		</div>
-		
-
 		<!-- 맺음말 작성 -->
 		<div class="closing d-none">
 			<div class="card" style="width: 70%; height: auto;">
@@ -97,7 +85,16 @@
 		<div class="complete d-none">
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="completeArea">
-					<h5 class="fw-bold mb-3">완료</h5>
+					<div class="text-center">
+						<img src="${pageContext.request.contextPath}/resources/img/surveyFinish.png" class="img-fluid" style="max-width: 50%;" alt="설문완료_일러스트">
+						<div class="alert alert-info small mt-3">
+				    		설문지 작성 수고하셨습니다!
+				    	</div>
+					</div>
+					<div class="saveBtn d-flex justify-content-center gap-3" id="compleSurveyWrap">
+		  				<button type="button" class="btn btn-outline-secondary mt-3" id="surveyDetailBtn">미리보기</button>
+		  				<button type="button" class="btn btn-primary mt-3" id="surveyUploadBtn">설문게시</button>
+	  				</div>
 	  			</div>
 			</div>
 		</div>

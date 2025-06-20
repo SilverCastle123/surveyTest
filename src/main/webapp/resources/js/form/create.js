@@ -9,8 +9,7 @@ function initSurveyApp() {
 	bindDragEvent();			// 드래그 이벤트 호출
 	bindRadioChoice();			// 객관식 관련 호출
 	bindGridQuestion();			// 그리드 레이아웃 호출
-	getGridQuestionHtml()		// 그리드 문항상세 호출
-	
+	getGridQuestionHtml();		// 그리드 문항상세 호출
 }
 
 
@@ -20,7 +19,7 @@ function bindTopNav() {
 			e.preventDefault();
 			
 			// 모든 영역 숨김
-			document.querySelectorAll(".basicInf, .question, .respInfo, .closing, .complete")
+			document.querySelectorAll(".basicInf, .question, .closing, .complete")
 			.forEach(section => section.classList.add("d-none"));
 				
 			// 클릭한 영역 표시
@@ -481,7 +480,17 @@ function bindGridQuestion() {
 }
 
 
+// 설문지 미리보기 버튼 클릭 시
+document.getElementById("surveyDetailBtn").addEventListener("click", function () {
+	Swal.fire("미리보기 버튼 클릭");
+    return;
+});
 
+// 설문지 게시 버튼 클릭 시
+document.getElementById("surveyUploadBtn").addEventListener("click", function () {
+	Swal.fire("설문지 게시 버튼 클릭");
+    return;
+});
 
 
 
