@@ -102,7 +102,7 @@ function bindCreateQuestion(){
 				
 				<!-- 문항 헤더 -->
 				<div class="d-flex justify-content-between align-items-center mb-2">
-					<div class="fw-bold">문항 ${questionNum} [객관식,세로]</div>
+					<div class="fw-bold">문항 ${questionNum} [객관식,가로]</div>
 					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
 				</div>
 				
