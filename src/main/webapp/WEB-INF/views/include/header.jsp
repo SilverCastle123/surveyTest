@@ -8,6 +8,8 @@
 <link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 
+<!-- jQuery -->
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.min.js"></script>
 
 <script>
  	// 경로 변수등록

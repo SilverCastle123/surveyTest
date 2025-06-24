@@ -15,8 +15,6 @@
     
 </head>
 
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.min.js"></script>
-
 <body>
 	<div class="wrapper">
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
@@ -28,7 +26,7 @@
 			    <li><a href="#" data-target=".basicInf" class="fw-bold text-primary">기본정보 등록</a></li>
 			    <li><a href="#" data-target=".question">설문문항 작성</a></li>
 			    <li><a href="#" data-target=".closing">맺음말 작성</a></li>
-			    <li><a href="#" data-target=".complete">최종확인</a></li>
+			    <li><a href="#" data-target=".complete">설문게시</a></li>
 			</ol>
 		</nav>
 		
@@ -62,7 +60,7 @@
 	  					우측 패널을 이용하여 설문 문항을 등록하여주세요.
 	  				</div>
 	  				<div class="saveBtn d-none" id="saveSurveyWrap">
-		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">임시저장</button>
+		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">미리보기</button>
 	  				</div>
 	  			</div>	
 			</div>
@@ -86,14 +84,23 @@
 			<div class="card" style="width: 70%; height: auto;">
 				<div id="completeArea">
 					<div class="text-center">
-						<img src="${pageContext.request.contextPath}/resources/img/surveyFinish.png" class="img-fluid" style="max-width: 50%;" alt="설문완료_일러스트">
-						<div class="alert alert-info small mt-3">
-				    		설문지 작성 수고하셨습니다!
+						<img src="${pageContext.request.contextPath}/resources/img/surveyFinish.png" class="img-fluid" style="max-width: 40%;" alt="설문완료_일러스트">
+						<div class="alert alert-warning small mt-3">
+				    		설문지 작성 고생하셨습니다.<br>
+				    		※ 설문 결과조회, 수정, 삭제를 위한 비밀번호를 입력해 주세요.
 				    	</div>
+				    	<form id="dummyPasswordForm">
+							<div class="input-group mb-3">
+								<span class="input-group-text p-2">
+									<img src="${pageContext.request.contextPath}/resources/img/icon/key-fill.svg" alt="비밀번호 아이콘" style="width: 1.2rem; height: 1.2rem;" />
+								</span>
+								<input type="password" class="form-control" placeholder="설문지 비밀번호 작성..." id="passwordInput" autocomplete="off">
+							</div>
+				    	</form>
 					</div>
 					<div class="saveBtn d-flex justify-content-center gap-3" id="compleSurveyWrap">
-		  				<button type="button" class="btn btn-outline-secondary mt-3" id="surveyDetailBtn">미리보기</button>
-		  				<button type="button" class="btn btn-primary mt-3" id="surveyUploadBtn">설문게시</button>
+		  				<button type="button" class="btn btn-secondary rounded-pill px-3" id="surveyDetailBtn">미리보기</button>
+		  				<button type="button" class="btn btn-primary rounded-pill px-3" id="surveyUploadBtn">설문게시</button>
 	  				</div>
 	  			</div>
 			</div>

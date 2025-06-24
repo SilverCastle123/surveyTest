@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SurveyViewController {
-
+	
+	// 설문지 작성 페이지
     @RequestMapping("/form/create.do")
     public String create() {
         return "form/create";
+    }
+
+    // 설문지 상세보기 페이지
+    @RequestMapping("/form/detail.do")
+    public String detail() {
+    	return "form/detail";
     }
     
 }

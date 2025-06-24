@@ -48,20 +48,9 @@
 				        <td>
 				        	<img src="${pageContext.request.contextPath}/resources/img/icon/download.svg" class="download-icon" alt="다운로드아이콘" style="cursor: pointer;">
 				        </td>
-				        <td><a href="#">지역 상권 활성화를 위한 소비자 만족도 조사</a></td>
+				        <td><a href="${pageContext.request.contextPath}/form/detail.do">지역 상권 활성화를 위한 소비자 만족도 조사</a></td>
 				        <td>2025-06-12</td>
 				        <td>2025-07-12</td>
-				        <td>-</td>
-			    	</tr>
-		        	<tr>
-		        		<td hidden="true">S00371</td>
-				        <td>2</td>
-				        <td>
-				        	<img src="${pageContext.request.contextPath}/resources/img/icon/download.svg" class="download-icon" alt="다운로드아이콘" style="cursor: pointer;">
-				        </td>
-				        <td><a href="#">공공시설 이용자 서비스 품질 평가 설문조사</a></td>
-				        <td>2025-05-01</td>
-				        <td>2025-06-28</td>
 				        <td>-</td>
 			    	</tr>
 		    	</tbody>

@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", initSurveyApp);
 function initSurveyApp() {
 	bindSearch();			// 검색 호출
 	downloadDropdown();		// 다운로드 아이콘 드롭다운 호출
-	surveyDetail();			// 작성된 설문조사 목록 호출
 	bindDownload();			// PDF, 엑셀 다운로드 호출
 }
 
@@ -26,21 +25,6 @@ function bindSearch(){
 	});
 };
 
-
-function surveyDetail(){
-	
-	// 제목 클릭 설문 상세보기
-	document.querySelectorAll("td:nth-child(4)").forEach(td => {
-		td.addEventListener("click", function () {
-			const surveyId = this.parentElement.cells[0].innerText;
-			Swal.fire({
-				title: "설문목록 클릭 체크",
-				text: `설문ID: ${surveyId}`,
-				icon: "success"
-			});
-		});
-	});	
-}
 
 
 function downloadDropdown(){
