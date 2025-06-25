@@ -109,12 +109,25 @@
 		<!-- 설문지 작성 컨트롤러 -->
 		<div class="ctrl-panel d-none" id="questionCtrl">
 			<div class="d-flex flex-column align-items-center">
-				<button type="button" class="init-btn addQuestionBtn mb-2" id="objectV">객관식 문항 (세로) 추가</button>
-				<button type="button" class="init-btn addQuestionBtn mb-2" id="objectH">객관식 문항 (가로) 추가</button>
-				<button type="button" class="init-btn addQuestionBtn mb-2" id="subject">주관식 문항 추가</button>
-				<button type="button" class="init-btn addQuestionBtn mb-2" id="grid">그리드 문항 추가</button>
+				<div class="addQuestionBtn text-center mb-2" id="objectV" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectVBtn.png" alt="객관식 세로" style="width: 100%;">
+			  		<div class="mt-1 small fw-bold">객관식(세로)</div>
+				</div>
+				<div class="addQuestionBtn text-center mb-2" id="objectH" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectHBtn.png" alt="객관식 가로" style="width: 100%;">
+			  		<div class="mt-1 small fw-bold">객관식(가로)</div>
+				</div>
+				<div class="addQuestionBtn text-center mb-2" id="subject" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/subjectBtn.png" alt="주관식" style="width: 100%;">
+			  		<div class="mt-1 small fw-bold">주관식</div>
+				</div>
+				<div class="addQuestionBtn text-center" id="grid" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/gridBtn.png" alt="그리드" style="width: 100%;">
+			  		<div class="mt-1 small fw-bold">그리드</div>
+				</div>
 			</div>
 		</div>
+
 
 		<!-- 응답자 정보 컨트롤러 -->
 		<div class="ctrl-panel d-none" id="respInfoCtrl">
