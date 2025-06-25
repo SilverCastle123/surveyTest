@@ -3,6 +3,7 @@ package com.init.survey.service.impl;
 import com.init.survey.dto.SurveyDTO;
 import com.init.survey.dto.SurveySaveRequest;
 import com.init.survey.entity.Choice;
+import com.init.survey.entity.GridCategory;
 import com.init.survey.entity.Question;
 import com.init.survey.entity.Survey;
 import com.init.survey.repository.QuestionRepository;
@@ -75,11 +76,34 @@ public class SurveyServiceImpl implements SurveyService {
                             && q.getChoices() != null) {
                         List<Choice> choices = q.getChoices().stream()
                                 .map(choiceDTO -> Choice.builder()
+                                		.order(choiceDTO.getOrder() != null ? choiceDTO.getOrder() : 0)
                                         .content(choiceDTO.getContent())
                                         .question(question)
                                         .build())
                                 .collect(Collectors.toList());
                         question.setChoices(choices);
+                    }
+                    
+                    
+                 // 그리드 문항 처리
+                    else if ("grid".equals(q.getType())) {
+                        question.setScaleType(q.getScaleType());
+                        question.setScaleSize(q.getScaleSize());
+
+                        if (q.getCategories() != null) {
+                            List<GridCategory> categories = q.getCategories().stream()
+                                    .map(catDTO -> {
+                                        GridCategory category = GridCategory.builder()
+                                                .order(catDTO.getOrder())
+                                                .content(catDTO.getContent())
+                                                .question(question)
+                                                .build();
+                                        return category;
+                                    })
+                                    .collect(Collectors.toList());
+
+                            question.setGridCategories(categories);
+                        }
                     }
 
                     return question;

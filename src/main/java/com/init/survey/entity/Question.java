@@ -2,6 +2,8 @@ package com.init.survey.entity;
 
 import javax.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,6 +26,11 @@ public class Question {
 
     @Column(length = 1000)
     private String content;
+    
+    // 그리드 문항 관련 필드
+    private String scaleType; // agree, satisfy, truth
+    private Integer scaleSize; // 5, 7
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_id")
@@ -31,5 +38,8 @@ public class Question {
     
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Choice> choices;
+    
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GridCategory> gridCategories;
 
 }

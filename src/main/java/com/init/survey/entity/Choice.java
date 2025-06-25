@@ -17,6 +17,9 @@ public class Choice {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "choice_seq_gen")
     @SequenceGenerator(name = "choice_seq_gen", sequenceName = "CHOICE_SEQ", allocationSize = 1)
     private Long id;
+    
+    @Column(name = "choice_order")
+    private int order;
 
     @Column(length = 1000)
     private String content;

@@ -511,6 +511,8 @@ document.getElementById("saveSurveyBtn").addEventListener("click", function () {
 
 document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
   const type = el.getAttribute("data-type") || "subject";
+  console.log(`문항 ${index + 1} 타입: ${type}`);
+  
   const questionInput = el.querySelector("input");
   const questionText = questionInput ? questionInput.value.trim() : `문항 ${index + 1}`;
 
@@ -522,11 +524,16 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
 
   // 객관식 보기 항목 수집
   if (type === "objectV" || type === "objectH") {
+	  console.log("객관식 문항입니다.");
+	  
     const choices = [];
-    el.querySelectorAll(".choice-list .choice-item").forEach((item) => {
+    el.querySelectorAll(".choice-list .choice-item").forEach((item, idx) => {
       const choiceText = item.querySelector("input[type='text']").value.trim();
       if (choiceText) {
-        choices.push({ content: choiceText });
+        choices.push({
+      		order: idx + 1,       // 보기 순서 추가
+      		content: choiceText
+    	});
       }
     });
     questionData.choices = choices;
@@ -534,6 +541,33 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
 
   // 한 번만 push (중복 방지)
   questions.push(questionData);
+  
+  
+  if (type === "grid") {
+  const scaleType = el.querySelector(".grid-scale-type").value;
+  const scaleSize = parseInt(el.querySelector(".grid-scale-size").value);
+
+  const categories = [];  // 그리드 문항의 각 항목(행)
+
+  const tableRows = el.querySelectorAll(".grid-table tbody .question-row");
+
+  tableRows.forEach((row, rowIdx) => {
+    const questionText = row.querySelector(".question-text").value.trim();
+    if (questionText) {
+      categories.push({
+        order: rowIdx + 1,
+        content: questionText
+      });
+    }
+  });
+
+  questionData.scaleType = scaleType;
+  questionData.scaleSize = scaleSize;
+  questionData.categories = categories; // 서버에서 받을 항목 리스트
+
+  console.log("그리드 문항:", questionData);
+}
+
 });
 
 const data = {
@@ -551,7 +585,6 @@ $.ajax({
   contentType: "application/json",
   data: JSON.stringify(data),
   success: function (response) {
-    console.log("서버 응답:", response);
     Swal.fire("설문이 저장되었습니다.", "", "success").then(() => {
       location.href = contextPath + "/main.do";
     });

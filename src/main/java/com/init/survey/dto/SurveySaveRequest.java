@@ -42,12 +42,33 @@ public class SurveySaveRequest {
         
         private List<ChoiceDTO> choices;
         
+        // 그리드 문항용 필드
+        private String scaleType;
+        private Integer scaleSize;
+        private List<GridCategoryDTO> categories;
+        
         @Getter
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
         @Builder
         public static class ChoiceDTO {
+        	
+
+        	private Integer order;
+            @NotBlank
+            private String content;
+           
+        }
+        
+        @Getter
+        @Setter
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Builder
+        public static class GridCategoryDTO {
+            private Integer order;
+
             @NotBlank
             private String content;
         }
