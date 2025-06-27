@@ -110,19 +110,19 @@
 		<div class="ctrl-panel d-none" id="questionCtrl">
 			<div class="d-flex flex-column align-items-center">
 				<div class="addQuestionBtn text-center mb-2" id="objectV" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectVBtn.png" alt="객관식 세로" style="width: 100%;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectVBtn.png" alt="객관식 세로" style="width: 100%;" draggable="false">
 			  		<div class="mt-1 small fw-bold">객관식(세로)</div>
 				</div>
 				<div class="addQuestionBtn text-center mb-2" id="objectH" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectHBtn.png" alt="객관식 가로" style="width: 100%;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectHBtn.png" alt="객관식 가로" style="width: 100%;" draggable="false">
 			  		<div class="mt-1 small fw-bold">객관식(가로)</div>
 				</div>
 				<div class="addQuestionBtn text-center mb-2" id="subject" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/subjectBtn.png" alt="주관식" style="width: 100%;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/subjectBtn.png" alt="주관식" style="width: 100%;" draggable="false">
 			  		<div class="mt-1 small fw-bold">주관식</div>
 				</div>
 				<div class="addQuestionBtn text-center" id="grid" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/gridBtn.png" alt="그리드" style="width: 100%;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/gridBtn.png" alt="그리드" style="width: 100%;" draggable="false">
 			  		<div class="mt-1 small fw-bold">그리드</div>
 				</div>
 			</div>
