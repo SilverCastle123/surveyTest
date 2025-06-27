@@ -32,7 +32,7 @@ public class SurveySaveRequest {
     @Builder
     public static class QuestionDTO {
         @NotNull
-        private Integer order;
+        private Integer questionOrder;
 
         @NotBlank
         private String type;
@@ -55,7 +55,7 @@ public class SurveySaveRequest {
         public static class ChoiceDTO {
         	
 
-        	private Integer order;
+        	private Integer choiceOrder;
             @NotBlank
             private String content;
            
@@ -67,10 +67,12 @@ public class SurveySaveRequest {
         @AllArgsConstructor
         @Builder
         public static class GridCategoryDTO {
-            private Integer order;
+            private Integer categoryOrder;
 
             @NotBlank
             private String content;
         }
     }
+    
+    
 }

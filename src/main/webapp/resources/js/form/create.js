@@ -517,7 +517,7 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
   const questionText = questionInput ? questionInput.value.trim() : `문항 ${index + 1}`;
 
   const questionData = {
-    order: index + 1,
+    questionOrder: index + 1,
     type: type,
     content: questionText
   };
@@ -531,7 +531,7 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
       const choiceText = item.querySelector("input[type='text']").value.trim();
       if (choiceText) {
         choices.push({
-      		order: idx + 1,       // 보기 순서 추가
+      		choiceOrder: idx + 1,       // 보기 순서 추가
       		content: choiceText
     	});
       }
@@ -555,7 +555,7 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
     const questionText = row.querySelector(".question-text").value.trim();
     if (questionText) {
       categories.push({
-        order: rowIdx + 1,
+        categoryOrder: rowIdx + 1,
         content: questionText
       });
     }

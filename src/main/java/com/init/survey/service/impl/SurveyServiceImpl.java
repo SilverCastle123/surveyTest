@@ -2,6 +2,8 @@ package com.init.survey.service.impl;
 
 import com.init.survey.dto.SurveyDTO;
 import com.init.survey.dto.SurveySaveRequest;
+import com.init.survey.dto.SurveySaveRequest.QuestionDTO.ChoiceDTO;
+import com.init.survey.dto.SurveySaveRequest.QuestionDTO.GridCategoryDTO;
 import com.init.survey.entity.Choice;
 import com.init.survey.entity.GridCategory;
 import com.init.survey.entity.Question;
@@ -10,11 +12,17 @@ import com.init.survey.repository.QuestionRepository;
 import com.init.survey.repository.SurveyRepository;
 import com.init.survey.service.SurveyService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,15 +33,28 @@ public class SurveyServiceImpl implements SurveyService {
     private final QuestionRepository questionRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<SurveyDTO> getAllSurveys() {
+    	List<Survey> surveys = surveyRepository.findAll();
+    	
+        // 강제로 질문 컬렉션 초기화 (Hibernate 세션 내에서)
+        surveys.forEach(survey -> survey.getQuestions().size());
+    	
         return surveyRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public Page<SurveyDTO> getSurveysPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return surveyRepository.findAll(pageable).map(this::convertToDTO);
+    }
+
 
     @Override
     public SurveyDTO getSurveyById(Long id) {
-        return surveyRepository.findById(id)
+        return surveyRepository.findWithQuestionsById(id)
                 .map(this::convertToDTO)
                 .orElse(null);
     }
@@ -62,53 +83,48 @@ public class SurveyServiceImpl implements SurveyService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        List<Question> questions = request.getQuestions().stream()
-                .map(q -> {
-                    Question question = Question.builder()
-                            .order(q.getOrder())
-                            .type(q.getType())
-                            .content(q.getContent())
-                            .survey(survey)
-                            .build();
+        Set<Question> questions = request.getQuestions().stream()
+        	    .map(q -> {
+        	        Question question = Question.builder()
+        	            .questionOrder(q.getQuestionOrder())
+        	            .type(q.getType())
+        	            .content(q.getContent())
+        	            .survey(survey)
+        	            .build();
 
-                    // 선택형 문항일 경우 보기 추가
-                    if ((q.getType().equals("objectV") || q.getType().equals("objectH"))
-                            && q.getChoices() != null) {
-                        List<Choice> choices = q.getChoices().stream()
-                                .map(choiceDTO -> Choice.builder()
-                                		.order(choiceDTO.getOrder() != null ? choiceDTO.getOrder() : 0)
-                                        .content(choiceDTO.getContent())
-                                        .question(question)
-                                        .build())
-                                .collect(Collectors.toList());
-                        question.setChoices(choices);
-                    }
-                    
-                    
-                 // 그리드 문항 처리
-                    else if ("grid".equals(q.getType())) {
-                        question.setScaleType(q.getScaleType());
-                        question.setScaleSize(q.getScaleSize());
+        	        // 선택형 문항일 경우 보기 추가
+        	        if ((q.getType().equals("objectV") || q.getType().equals("objectH"))
+        	                && q.getChoices() != null) {
+        	            Set<Choice> choices = q.getChoices().stream()
+        	                    .map(choiceDTO -> Choice.builder()
+        	                            .choiceOrder(choiceDTO.getChoiceOrder() != null ? choiceDTO.getChoiceOrder() : 0)
+        	                            .content(choiceDTO.getContent())
+        	                            .question(question)
+        	                            .build())
+        	                    .collect(Collectors.toSet());
+        	            question.setChoices(choices);
+        	        }                
+        	     // 그리드 문항 처리
+        	        else if ("grid".equals(q.getType())) {
+        	            question.setScaleType(q.getScaleType());
+        	            question.setScaleSize(q.getScaleSize());
 
-                        if (q.getCategories() != null) {
-                            List<GridCategory> categories = q.getCategories().stream()
-                                    .map(catDTO -> {
-                                        GridCategory category = GridCategory.builder()
-                                                .order(catDTO.getOrder())
-                                                .content(catDTO.getContent())
-                                                .question(question)
-                                                .build();
-                                        return category;
-                                    })
-                                    .collect(Collectors.toList());
+        	            if (q.getCategories() != null) {
+        	                Set<GridCategory> categories = q.getCategories().stream()
+        	                    .map(catDTO -> GridCategory.builder()
+        	                        .categoryOrder(catDTO.getCategoryOrder())
+        	                        .content(catDTO.getContent())
+        	                        .question(question)
+        	                        .build())
+        	                    .collect(Collectors.toSet());
 
-                            question.setGridCategories(categories);
-                        }
-                    }
+        	                question.setGridCategories(categories);
+        	            }
+        	        }
 
-                    return question;
-                })
-                .collect(Collectors.toList());
+        	        return question;
+        	    })
+        	    .collect(Collectors.toSet());
 
         survey.setQuestions(questions);
         surveyRepository.save(survey); // cascade로 question, choice도 함께 저장됨
@@ -123,14 +139,30 @@ public class SurveyServiceImpl implements SurveyService {
                 .questions(
                         survey.getQuestions().stream()
                                 .map(q -> SurveyDTO.QuestionDTO.builder()
-                                        .order(q.getOrder())
+                                        .questionOrder(q.getQuestionOrder())
                                         .type(q.getType())
                                         .content(q.getContent())
+                                        .scaleType(q.getScaleType())
+                                        .scaleSize(q.getScaleSize())
+                                        .choices(q.getChoices() != null ?
+                                                q.getChoices().stream()
+                                                        .map(c -> new ChoiceDTO(c.getChoiceOrder(), c.getContent()))
+                                                        .collect(Collectors.toList()) : null)
+                                        .categories(q.getGridCategories() != null ?
+                                                q.getGridCategories().stream()
+                                                        .map(cat -> new GridCategoryDTO(cat.getCategoryOrder(), cat.getContent()))
+                                                        .collect(Collectors.toList()) : null)
                                         .build())
                                 .collect(Collectors.toList())
                 )
                 .build();
     }
+
+    
+    
+    
+ 
+
     
     
 }

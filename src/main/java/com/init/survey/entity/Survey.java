@@ -4,7 +4,9 @@ import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "SVY_SURVEYS")
@@ -27,5 +29,5 @@ public class Survey {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions;
+    private Set<Question> questions = new HashSet<>();
 }

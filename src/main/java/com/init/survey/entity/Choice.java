@@ -19,7 +19,7 @@ public class Choice {
     private Long id;
     
     @Column(name = "choice_order")
-    private int order;
+    private Integer choiceOrder;
 
     @Column(length = 1000)
     private String content;

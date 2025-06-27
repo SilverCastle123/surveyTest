@@ -4,7 +4,9 @@ import javax.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "SVY_QUESTION")
@@ -20,7 +22,7 @@ public class Question {
     private Long id;
 
     @Column(name = "question_order")
-    private int order;
+    private int questionOrder;
 
     private String type;
 
@@ -37,9 +39,9 @@ public class Question {
     private Survey survey;
     
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Choice> choices;
+    private Set<Choice> choices = new HashSet<>();
     
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<GridCategory> gridCategories;
+    private Set<GridCategory> gridCategories = new HashSet<>();
 
 }

@@ -3,7 +3,12 @@ package com.init.survey.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import com.init.survey.dto.SurveySaveRequest.QuestionDTO.ChoiceDTO;
+import com.init.survey.dto.SurveySaveRequest.QuestionDTO.GridCategoryDTO;
+
 
 @Getter
 @Setter
@@ -18,10 +23,25 @@ public class SurveyDTO {
     private LocalDateTime createdAt;
     private List<QuestionDTO> questions;
     
+    
+    
     @Getter @Setter @Builder
     public static class QuestionDTO {
-        private int order;
+        private int questionOrder;
         private String type;
         private String content;
+                
+        private String scaleType;
+        private Integer scaleSize;
+        
+        private List<ChoiceDTO> choices;
+        private List<GridCategoryDTO> categories;
+    }
+    
+    public String getCreatedAtFormatted() {
+        if (createdAt == null) {
+            return "";
+        }
+        return createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

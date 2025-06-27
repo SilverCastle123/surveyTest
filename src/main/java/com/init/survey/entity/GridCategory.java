@@ -17,7 +17,7 @@ public class GridCategory {
     private Long id;
 
     @Column(name = "CATEGORY_ORDER")
-    private int order;
+    private int categoryOrder;
 
     @Column(nullable = false)
     private String content;

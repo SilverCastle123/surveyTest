@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -53,8 +55,52 @@
 				        <td>2025-07-12</td>
 				        <td>-</td>
 			    	</tr>
+			    	
+				  <c:forEach var="survey" items="${surveyList}" varStatus="status">
+				    <tr>
+				      <td>${status.index + 1}</td>
+				      <td>
+				        <img src="${pageContext.request.contextPath}/resources/img/icon/download.svg" 
+				             class="download-icon" alt="다운로드아이콘" style="cursor: pointer;">
+				      </td>
+				      <td>
+				        <a href="${pageContext.request.contextPath}/form/detail.do?id=${survey.id}">
+				          ${survey.title}
+				        </a>
+				      </td>
+				      <td>${survey.createdAtFormatted}</td>
+				      <td>-</td> <!-- 마감일 없으면 - 처리 -->
+				      <td>-</td> <!-- 응답현황 나중에 추가 -->
+				    </tr>
+				  </c:forEach>			    	
 		    	</tbody>
 	  		</table>
+	  		
+			<c:if test="${totalPages > 0}">
+			  <div class="pagination text-center my-4">
+			    <c:if test="${hasPrevious}">
+			      <a href="main.do?page=${currentPage - 1}" class="btn btn-outline-secondary btn-sm mx-1">이전</a>
+			    </c:if>
+			
+			    <c:forEach begin="0" end="${totalPages - 1}" var="i">
+			      <a href="main.do?page=${i}" class="btn btn-sm mx-1
+			        <c:if test='${i == currentPage}'>btn-primary</c:if>
+			        <c:if test='${i != currentPage}'>btn-outline-primary</c:if>">
+			        ${i + 1}
+			      </a>
+			    </c:forEach>
+			
+			    <c:if test="${hasNext}">
+			      <a href="main.do?page=${currentPage + 1}" class="btn btn-outline-secondary btn-sm mx-1">다음</a>
+			    </c:if>
+			  </div>
+			</c:if>
+			<c:if test="${empty surveyList}">
+			  <tr>
+			    <td colspan="6">등록된 설문이 없습니다.</td>
+			  </tr>
+			</c:if>
+						  		
 		</div>
 		
 		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 100px; width: 100px;">		
