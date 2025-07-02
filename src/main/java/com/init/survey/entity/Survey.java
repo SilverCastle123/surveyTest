@@ -25,6 +25,9 @@ public class Survey {
 
     @Column(length = 1000)
     private String description;
+    
+    @Column(name = "CLOSING_MESSAGE")
+    private String closingMessage;
 
     private LocalDateTime createdAt;
 

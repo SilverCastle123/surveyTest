@@ -25,7 +25,6 @@
 				    <!-- 설문 제목 및 설명 -->
 				    <div class="card-header bg-primary text-white">
 				        <h4>${survey.title}</h4>
-				        <p class="mb-0">${survey.description}</p>
 				    </div>
 				
 				    <!-- 설문 수정/삭제 버튼 -->
@@ -35,6 +34,17 @@
 				    </div>
 				
 				    <!-- 문항 반복 -->
+				    <c:if test="${not empty survey.description}">
+					    <div class="card mt-4">
+					        <div class="card-header bg-secondary text-white">
+					            <strong>인사말</strong>
+					        </div>
+					        <div class="card-body">
+					            <p>${survey.description}</p>
+					        </div>
+					    </div>
+					</c:if>
+				    
 				    <c:forEach var="question" items="${survey.questions}">
 					    <div class="card mb-3">
 					        <div class="card-header bg-light">
@@ -90,6 +100,17 @@
 					        </div>
 					    </div>
 					</c:forEach>
+					
+					<c:if test="${not empty survey.closingMessage}">
+					    <div class="card mt-4">
+					        <div class="card-header bg-secondary text-white">
+					            <strong>맺음말</strong>
+					        </div>
+					        <div class="card-body">
+					            <p>${survey.closingMessage}</p>
+					        </div>
+					    </div>
+					</c:if>
 
 				</div>
 

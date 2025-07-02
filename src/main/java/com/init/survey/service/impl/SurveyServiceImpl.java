@@ -64,6 +64,7 @@ public class SurveyServiceImpl implements SurveyService {
         Survey survey = Survey.builder()
                 .title(dto.getTitle())
                 .description(dto.getDescription())
+                .closingMessage(dto.getClosingMessage())
                 .createdAt(LocalDateTime.now())
                 .build();
         return convertToDTO(surveyRepository.save(survey));
@@ -80,6 +81,7 @@ public class SurveyServiceImpl implements SurveyService {
         Survey survey = Survey.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
+                .closingMessage(request.getClosingMessage())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -135,6 +137,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .id(survey.getId())
                 .title(survey.getTitle())
                 .description(survey.getDescription())
+                .closingMessage(survey.getClosingMessage())
                 .createdAt(survey.getCreatedAt())
                 .questions(
                         survey.getQuestions().stream()

@@ -499,6 +499,7 @@ document.getElementById("saveSurveyBtn").addEventListener("click", function () {
 
   const title = document.getElementById("searchText").value.trim();
   const description = document.querySelector(".basicInf textarea").value.trim();
+  const closingMessage = document.getElementById("closingMessage").value.trim();
   console.log("title:", title, "description:", description);
 
   if (!title) {
@@ -573,6 +574,7 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
 const data = {
   title: title,
   description: description,
+  closingMessage: closingMessage,
   questions: questions
 };
 

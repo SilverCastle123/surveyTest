@@ -20,6 +20,8 @@ public class SurveySaveRequest {
     private String title;
 
     private String description;
+    
+    private String closingMessage;
 
     @NotNull
     @Size(min = 1, message = "최소 1개의 문항이 필요합니다.")

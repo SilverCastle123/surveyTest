@@ -19,6 +19,7 @@ public class SurveyDTO {
     private Long id;
     private String title;
     private String description;
+    private String closingMessage;
     
     private LocalDateTime createdAt;
     private List<QuestionDTO> questions;
