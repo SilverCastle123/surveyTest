@@ -154,7 +154,22 @@ function bindCreateQuestion(){
 	    } else if (type === "grid") {
 	      	// 그리드 문항 ----------------------------------------------------------------------------
 	      	questionHtml = getGridQuestionHtml(questionNum, "agree", 5); // "satisfy", "truth" // "5", "7"
-	    }
+	    } else if (type === "section") {
+			  // 중제목(섹션 타이틀)
+			  questionHtml = `
+			    <div class="p-2 mt-3 draggable bg-light border rounded" data-question="${questionNum}" data-type="section">
+			      <div class="d-flex justify-content-between align-items-center mb-2">
+			        <div class="fw-bold">중제목 ${questionNum}</div>
+			        <div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
+			      </div>
+			      <input type="text" name="section_${questionNum}" class="form-control" placeholder="중제목 내용을 입력하세요">
+			      <div class="text-end mt-2">
+			        <button type="button" class="btn btn-sm btn-danger delete-btn">중제목 삭제</button>
+			      </div>
+			    </div>
+			  `;
+		}
+
 	    document.getElementById("questionArea").insertAdjacentHTML("beforeend", questionHtml);
 	    updateSaveButtonVisibility();
 	  });
@@ -280,6 +295,7 @@ function renumberQuestions() {
       else if (type === "objectV") label.textContent = `문항 ${num} [객관식,세로]`;
       else if (type === "objectH") label.textContent = `문항 ${num} [객관식,가로]`;
       else if (type === "grid") label.textContent = `문항 ${num} [그리드]`;
+      else if (type === "section") label.textContent = `중제목 ${num}`;
     }
   });
 }
@@ -500,7 +516,8 @@ document.getElementById("saveSurveyBtn").addEventListener("click", function () {
   const title = document.getElementById("searchText").value.trim();
   const description = document.querySelector(".basicInf textarea").value.trim();
   const closingMessage = document.getElementById("closingMessage").value.trim();
-  console.log("title:", title, "description:", description);
+  const closingDate = document.getElementById("closingDate").value;
+  console.log("title:", title, "description:", description,"closingDate",closingDate);
 
   if (!title) {
     Swal.fire("설문 제목을 입력해주세요.");
@@ -522,6 +539,13 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
     type: type,
     content: questionText
   };
+  // 중제목 보기 항목 수집
+  if (type === "section") {
+    questionData.type = "section";
+    questionData.content = questionText;
+    questions.push(questionData); // 중제목만 저장하고 return으로 빠지기
+    return;
+  }
 
   // 객관식 보기 항목 수집
   if (type === "objectV" || type === "objectH") {
@@ -543,7 +567,7 @@ document.querySelectorAll("#questionArea .draggable").forEach((el, index) => {
   // 한 번만 push (중복 방지)
   questions.push(questionData);
   
-  
+  // 그리드 보기 항목 수집
   if (type === "grid") {
   const scaleType = el.querySelector(".grid-scale-type").value;
   const scaleSize = parseInt(el.querySelector(".grid-scale-size").value);
@@ -575,6 +599,7 @@ const data = {
   title: title,
   description: description,
   closingMessage: closingMessage,
+  closingDate: closingDate,
   questions: questions
 };
 

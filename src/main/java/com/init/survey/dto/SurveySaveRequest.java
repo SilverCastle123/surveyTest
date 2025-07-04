@@ -2,7 +2,7 @@ package com.init.survey.dto;
 
 import lombok.*;
 
-
+import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,6 +20,8 @@ public class SurveySaveRequest {
     private String title;
 
     private String description;
+    
+    private LocalDate closingDate;
     
     private String closingMessage;
 

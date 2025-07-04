@@ -69,7 +69,15 @@
 				        </a>
 				      </td>
 				      <td>${survey.createdAtFormatted}</td>
-				      <td>-</td> <!-- 마감일 없으면 - 처리 -->
+				      <td>
+					    <c:choose>
+					      <c:when test="${not empty survey.closingDateStr}">
+					         <fmt:parseDate value="${survey.closingDateStr}" pattern="yyyy-MM-dd" var="closingDateDate" />
+					         <fmt:formatDate value="${closingDateDate}" pattern="yyyy-MM-dd" />
+					      </c:when>
+					      <c:otherwise>-</c:otherwise>
+					    </c:choose>
+					  </td>
 				      <td>-</td> <!-- 응답현황 나중에 추가 -->
 				    </tr>
 				  </c:forEach>			    	

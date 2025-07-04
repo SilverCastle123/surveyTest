@@ -3,6 +3,7 @@ package com.init.survey.entity;
 import javax.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,9 @@ public class Survey {
     
     @Column(name = "CLOSING_MESSAGE")
     private String closingMessage;
+    
+    @Column(name = "CLOSING_DATE")
+    private LocalDate closingDate;
 
     private LocalDateTime createdAt;
 

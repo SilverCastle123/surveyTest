@@ -82,6 +82,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .closingMessage(request.getClosingMessage())
+                .closingDate(request.getClosingDate())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -138,6 +139,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .title(survey.getTitle())
                 .description(survey.getDescription())
                 .closingMessage(survey.getClosingMessage())
+                .closingDate(survey.getClosingDate())
                 .createdAt(survey.getCreatedAt())
                 .questions(
                         survey.getQuestions().stream()

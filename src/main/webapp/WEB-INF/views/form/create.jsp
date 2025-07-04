@@ -11,6 +11,12 @@
   border: 2px dashed #007bff;
   background-color: #f1f9ff;
 }
+
+[data-type="section"] {
+  background-color: #f9f9f9;
+  border-left: 4px solid #0d6efd;
+}
+
 </style>
     
 </head>
@@ -43,7 +49,12 @@
 					<div class="alert alert-info small mb-3">
 				    	※ 설문 목적이나 참여 방법 등을 간단히 안내하는 인사말을 작성해 주세요.
 				    </div>
-					<textarea class="form-control" rows="5" cols="" placeholder="인사말 작성.."></textarea>
+					<textarea class="form-control mb-3" rows="5" cols="" placeholder="인사말 작성.."></textarea>
+					
+					<div class="alert alert-info small mb-3">
+				        ※ 설문지 마감일을 선택해 주세요.
+				    </div>
+				    <input type="date" class="form-control mb-3" id="closingDate">
 				</div>
 			</div>
 		</div>
@@ -59,9 +70,9 @@
 	  				<div class="alert alert-danger small mb-3" id="questionNotice">
 	  					우측 패널을 이용하여 설문 문항을 등록하여주세요.
 	  				</div>
-	  				<div class="saveBtn d-none" id="saveSurveyWrap">
-		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">미리보기</button>
-	  				</div>
+<!-- 	  				<div class="saveBtn d-none" id="saveSurveyWrap"> -->
+<!-- 		  				<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">미리보기</button> -->
+<!-- 	  				</div> -->
 	  			</div>	
 			</div>
 		</div>
@@ -75,6 +86,9 @@
 				    	※ 응답자에게 마지막으로 전달할 감사 메시지를 입력해 주세요.
 				    </div>
       				<textarea class="form-control" rows="5" id="closingMessage" placeholder="맺음말 작성.."></textarea>
+	  			</div>
+				<div class="saveBtn" id="saveSurveyWrap">
+		  			<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">미리보기</button>
 	  			</div>
 			</div>
 		</div>
@@ -109,6 +123,9 @@
 		<!-- 설문지 작성 컨트롤러 -->
 		<div class="ctrl-panel d-none" id="questionCtrl">
 			<div class="d-flex flex-column align-items-center">
+				<div class="addQuestionBtn text-center mb-2" id="section" style="cursor: pointer;">		  			
+			  		<div class="mt-1 small fw-bold">중제목 추가</div>
+				</div>			
 				<div class="addQuestionBtn text-center mb-2" id="objectV" style="cursor: pointer;">
 		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectVBtn.png" alt="객관식 세로" style="width: 100%;" draggable="false">
 			  		<div class="mt-1 small fw-bold">객관식(세로)</div>
@@ -132,6 +149,7 @@
 		<!-- 응답자 정보 컨트롤러 -->
 		<div class="ctrl-panel d-none" id="respInfoCtrl">
 			<div class="d-flex flex-column align-items-center">
+				<button type="button" class="init-btn addrespInfoBtn mb-2" id="section">중제목 추가</button>					
 				<button type="button" class="init-btn addrespInfoBtn mb-2" id="respInfoV">객관식 문항 (세로) 추가</button>
 				<button type="button" class="init-btn addrespInfoBtn mb-2" id="respInfoH">객관식 문항 (가로) 추가</button>
 				<button type="button" class="init-btn addrespInfoBtn mb-2" id="respInfoSub">주관식 문항 추가</button>

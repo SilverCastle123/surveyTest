@@ -2,6 +2,7 @@ package com.init.survey.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,7 +21,7 @@ public class SurveyDTO {
     private String title;
     private String description;
     private String closingMessage;
-    
+    private LocalDate closingDate;
     private LocalDateTime createdAt;
     private List<QuestionDTO> questions;
     
@@ -45,4 +46,13 @@ public class SurveyDTO {
         }
         return createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
+    
+
+
+    public String getClosingDateStr() {
+        return closingDate != null
+            ? closingDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            : "";
+    }
+
 }
