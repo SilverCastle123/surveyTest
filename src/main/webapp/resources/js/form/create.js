@@ -81,7 +81,7 @@ function bindCreateQuestion(){
 			    <div class="choice-list mb-2">
 			    	${[1,2].map(() => `
 					    <div class="d-flex align-items-center mb-1 choice-item">
-					    	<input type="radio" disabled class="me-2">
+					    	<input type="radio" name="question_${questionNum}" class="me-2">
 					    	<input type="text" class="form-control me-2" placeholder="보기 내용을 입력하세요">
 					    	<button type="button" class="btn btn-sm btn-outline-danger delete-choice-btn">✕</button>
 					    </div>
@@ -113,7 +113,7 @@ function bindCreateQuestion(){
 			    <div class="choice-list d-flex flex-wrap gap-2 mb-2">
 			    	${[1,2].map(() => `
 					    <div class="d-flex align-items-center choice-item">
-					    	<input type="radio" disabled class="me-2">
+					    	<input type="radio" name="question_${questionNum}" class="me-2">
 					    	<input type="text" class="form-control me-2" placeholder="보기 내용을 입력하세요">
 					    	<button type="button" class="btn btn-sm btn-outline-danger delete-choice-btn">✕</button>
 					    </div>
@@ -307,11 +307,12 @@ function bindRadioChoice(){
 	  if (e.target.classList.contains("add-choice-btn")) {
 	    const wrapper = e.target.closest(".draggable");
 	    const choiceList = wrapper.querySelector(".choice-list");
+	    const questionNum = wrapper.getAttribute("data-question");
 	
 	    const choiceItem = document.createElement("div");
 	    choiceItem.className = "d-flex align-items-center mb-1 choice-item";
 	    choiceItem.innerHTML = `
-  		<input type="radio" disabled class="me-2">
+  		<input type="radio" name="question_${questionNum}" class="me-2">
   		<input type="text" class="form-control me-2" placeholder="보기 내용을 입력하세요">
 		<button type="button" class="btn btn-sm btn-outline-danger delete-choice-btn">✕</button>
 	    `;
@@ -423,7 +424,18 @@ function getGridQuestionHtml(questionNum, scaleType = "agree", scaleSize = 5) {
 				</tr>
 			</thead>
 			<tbody>
-				${rowHtml}
+				  ${[1, 2].map((rowIdx) => `
+				    <tr class="question-row">
+				      <td class="d-flex align-items-center gap-1">
+				        <button type="button" class="btn btn-sm btn-outline-danger delete-grid-row">✕</button>
+				        <input type="text" class="form-control form-control-sm question-text" placeholder="질문 입력">
+				      </td>
+				      ${labels.map((_, i) => `
+				        <td class="text-center">
+				          <input type="radio" name="grid_${questionNum}_row${rowIdx}" value="${i + 1}">
+				        </td>`).join("")}
+				    </tr>
+				  `).join("")}
 			</tbody>
 		</table>
 		</div>
@@ -497,16 +509,128 @@ function bindGridQuestion() {
 
 
 // 설문지 미리보기 버튼 클릭 시
-document.getElementById("surveyDetailBtn").addEventListener("click", function () {
-	Swal.fire("미리보기 버튼 클릭");
-    return;
-});
+//document.getElementById("surveyDetailBtn").addEventListener("click", function () {
+//	Swal.fire("미리보기 버튼 클릭");
+//    return;
+//});
 
 // 설문지 게시 버튼 클릭 시
 document.getElementById("surveyUploadBtn").addEventListener("click", function () {
 	Swal.fire("설문지 게시 버튼 클릭");
     return;
 });
+
+
+// 모달
+document.addEventListener("DOMContentLoaded", function () {
+  const previewBtns = [
+    document.getElementById("surveyDetailBtn")
+  ];
+
+  const previewModalElement = document.getElementById("previewModal");
+  const previewModal = new bootstrap.Modal(previewModalElement);
+  const previewContent = document.getElementById("previewContent");
+
+  previewBtns.forEach(function (btn) {
+    if (btn) {
+      btn.addEventListener("click", function () {
+        previewContent.innerHTML = ""; // 초기화
+
+        // 기본정보
+        const title = document.getElementById("searchText")?.value || "";
+        const greeting = document.querySelector(".basicInf textarea")?.value || "";
+        const closingDate = document.getElementById("closingDate")?.value || "";
+
+        const infoSection = document.createElement("div");
+        infoSection.innerHTML = `
+          <h5 class="fw-bold"> 기본정보</h5>
+          <p><strong>제목:</strong> ${title}</p>
+          <p><strong>인사말:</strong> ${greeting.replace(/\n/g, "<br>")}</p>
+          <p><strong>마감일:</strong> ${closingDate}</p>
+          <hr />
+        `;
+        previewContent.appendChild(infoSection);
+
+        // 설문 문항
+        const questionArea = document.getElementById("questionArea");
+        const questionClone = questionArea ? questionArea.cloneNode(true) : null;
+
+        if (questionClone) {
+		  questionClone.querySelectorAll(".drag-handle").forEach(el => el.remove());
+			
+          const questionTitle = document.createElement("h5");
+          questionTitle.textContent = " 설문 문항";
+          previewContent.appendChild(questionTitle);
+
+          // 버튼, 조작기 제거 대신 숨김 처리
+          const selectorsToHide = [
+            "button",
+            ".addChoiceBtn",
+            ".removeChoiceBtn",
+            ".remove-question",
+            ".btn",
+            ".dragHandle",
+            ".question-number",
+            ".questionNum",
+            ".sortableHandle"
+          ];
+          selectorsToHide.forEach(sel => {
+            questionClone.querySelectorAll(sel).forEach(el => {
+              el.style.display = "none";
+            });
+          });
+
+          // "척도유형", "척도수" 포함 label 및 다음 요소 숨김 처리
+          questionClone.querySelectorAll("label").forEach(label => {
+            const text = label.textContent.trim();
+            if (text.includes("척도") || text.includes("척도유형") || text.includes("척도수")) {
+              label.style.display = "none";
+              const next = label.nextElementSibling;
+              if (next && (next.tagName === "SELECT" || next.tagName === "INPUT")) {
+                next.style.display = "none";
+              }
+            }
+          });
+
+          	// 입력 필드 비활성화 및 스타일 제거
+			questionClone.querySelectorAll("input, textarea, select").forEach(el => {
+			  const tag = el.tagName;
+			  const type = el.type;
+			
+			  const isSubjectAnswer = tag === "TEXTAREA" && el.placeholder === "답변 입력란";
+			  const isRadio = type === "radio";
+			
+			  if (isSubjectAnswer || isRadio) {
+			    el.removeAttribute("disabled"); // 주관식 응답, 객관식/그리드 라디오 버튼은 활성화
+			  } else {
+			    el.setAttribute("disabled", true); // 나머지는 비활성화
+			  }
+
+			});
+
+          previewContent.appendChild(questionClone);
+        }
+
+        // 맺음말
+        const closingText = document.getElementById("closingMessage")?.value || "";
+        const closingSection = document.createElement("div");
+        closingSection.innerHTML = `
+          <hr />
+          <h5 class="fw-bold"> 맺음말</h5>
+          <p>${closingText.replace(/\n/g, "<br>")}</p>
+        `;
+        previewContent.appendChild(closingSection);
+				
+        previewModal.show();
+      });
+    }
+  });
+});
+
+
+
+
+
 
 
 

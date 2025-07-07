@@ -17,9 +17,17 @@
   border-left: 4px solid #0d6efd;
 }
 
+#previewModal textarea {
+  margin-top: 0.5rem;
+}
+
+
 </style>
     
 </head>
+
+
+
 
 <body>
 	<div class="wrapper">
@@ -100,17 +108,8 @@
 					<div class="text-center">
 						<img src="${pageContext.request.contextPath}/resources/img/surveyFinish.png" class="img-fluid" style="max-width: 40%;" alt="설문완료_일러스트">
 						<div class="alert alert-warning small mt-3">
-				    		설문지 작성 고생하셨습니다.<br>
-				    		※ 설문 결과조회, 수정, 삭제를 위한 비밀번호를 입력해 주세요.
+				    		설문지 작성 고생하셨습니다.				    		
 				    	</div>
-				    	<form id="dummyPasswordForm">
-							<div class="input-group mb-3">
-								<span class="input-group-text p-2">
-									<img src="${pageContext.request.contextPath}/resources/img/icon/key-fill.svg" alt="비밀번호 아이콘" style="width: 1.2rem; height: 1.2rem;" />
-								</span>
-								<input type="password" class="form-control" placeholder="설문지 비밀번호 작성..." id="passwordInput" autocomplete="off">
-							</div>
-				    	</form>
 					</div>
 					<div class="saveBtn d-flex justify-content-center gap-3" id="compleSurveyWrap">
 		  				<button type="button" class="btn btn-secondary rounded-pill px-3" id="surveyDetailBtn">미리보기</button>
@@ -156,6 +155,23 @@
 			</div>
 		</div>
 		
+		<!-- 미리보기 모달 -->
+		<div id="previewModal" class="modal fade" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="previewModalLabel">설문 미리보기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+		      </div>
+		      <div class="modal-body" id="previewContent"></div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+				
+		
 		
    	</div>
 	<!-- 본문 영역 종료 -->
@@ -163,6 +179,8 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
 
+<!-- Bootstrap JS (모달 기능용) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/form/create.js"></script>
 </body>
 </html>
