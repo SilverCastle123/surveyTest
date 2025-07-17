@@ -247,20 +247,10 @@
 		<finalName>${artifactId}-${version}</finalName>
         <pluginManagement>
             <plugins>
-				<plugin>
-					<groupId>org.codehaus.cargo</groupId>
-					<artifactId>cargo-maven3-plugin</artifactId>
-					<version>1.10.7</version>
-					<configuration>
-						<container>
-							<containerId>tomcat8x</containerId>
-							<type>embedded</type>
-						</container>
-						<configuration>
-							<property name="cargo.servlet.port" value="8080"/>
-						</configuration>
-					</configuration>
-				</plugin>
+				
+				
+				
+				
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>

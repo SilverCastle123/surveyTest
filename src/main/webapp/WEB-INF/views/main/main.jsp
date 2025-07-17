@@ -38,23 +38,23 @@
 				        <th scope="col">번호</th>
 				        <th scope="col">파일</th>
 				        <th scope="col">제목</th>
-				        <th scope="col">설문조사 게시일</th>
+				        <th scope="col">설문조사 시작일</th>
 				        <th scope="col">설문조사 마감일</th>
 				        <th scope="col">응답현황</th>
 		      		</tr>
 		    	</thead>
 		    	<tbody>
-		        	<tr>
-		        		<td hidden="true">S00125</td>
-				        <td>1</td>
-				        <td>
-				        	<img src="${pageContext.request.contextPath}/resources/img/icon/download.svg" class="download-icon" alt="다운로드아이콘" style="cursor: pointer;">
-				        </td>
-				        <td><a href="${pageContext.request.contextPath}/form/detail.do">지역 상권 활성화를 위한 소비자 만족도 조사</a></td>
-				        <td>2025-06-12</td>
-				        <td>2025-07-12</td>
-				        <td>-</td>
-			    	</tr>
+<!-- 		        	<tr> -->
+<!-- 		        		<td hidden="true">S00125</td> -->
+<!-- 				        <td>1</td> -->
+<!-- 				        <td> -->
+<%-- 				        	<img src="${pageContext.request.contextPath}/resources/img/icon/download.svg" class="download-icon" alt="다운로드아이콘" style="cursor: pointer;"> --%>
+<!-- 				        </td> -->
+<%-- 				        <td><a href="${pageContext.request.contextPath}/form/detail.do">지역 상권 활성화를 위한 소비자 만족도 조사</a></td> --%>
+<!-- 				        <td>2025-06-12</td> -->
+<!-- 				        <td>2025-07-12</td> -->
+<!-- 				        <td>-</td> -->
+<!-- 			    	</tr> -->
 			    	
 				  <c:forEach var="survey" items="${surveyList}" varStatus="status">
 				    <tr>
@@ -111,7 +111,7 @@
 						  		
 		</div>
 		
-		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 100px; width: 100px;">		
+<%-- 		<img id="popcat" src="${pageContext.request.contextPath}/resources/img/popcat-pop.gif" alt="팝캣" class="popcat-run" style="margin-top: 100px; width: 100px;">		 --%>
 	</div>
 	<!-- 본문 영역 종료 -->
 	

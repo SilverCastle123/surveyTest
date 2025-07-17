@@ -70,7 +70,7 @@ function bindCreateQuestion(){
 
 				<!-- 문항 헤더 -->
 				<div class="d-flex justify-content-between align-items-center mb-2">
-					<div class="fw-bold">문항 ${questionNum} [객관식,세로]</div>
+					<div class="fw-bold">문항 ${questionNum}</div>
 					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
 				</div>
 				
@@ -102,7 +102,7 @@ function bindCreateQuestion(){
 				
 				<!-- 문항 헤더 -->
 				<div class="d-flex justify-content-between align-items-center mb-2">
-					<div class="fw-bold">문항 ${questionNum} [객관식,가로]</div>
+					<div class="fw-bold">문항 ${questionNum}</div>
 					<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
 				</div>
 				
@@ -134,7 +134,7 @@ function bindCreateQuestion(){
 				
 				<!-- 문항 헤더 -->
 				<div class="d-flex justify-content-between align-items-center mb-2">
-	        		<div class="mb-2 fw-bold">문항 ${questionNum} [주관식]</div>
+	        		<div class="mb-2 fw-bold">문항 ${questionNum}</div>
 	        		<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
 	        	</div>
 	        	
@@ -291,10 +291,10 @@ function renumberQuestions() {
     const type = el.getAttribute("data-type");
     const label = el.querySelector(".fw-bold");
     if (label) {
-      if (type === "subject") label.textContent = `문항 ${num} [주관식]`;
-      else if (type === "objectV") label.textContent = `문항 ${num} [객관식,세로]`;
-      else if (type === "objectH") label.textContent = `문항 ${num} [객관식,가로]`;
-      else if (type === "grid") label.textContent = `문항 ${num} [그리드]`;
+      if (type === "subject") label.textContent = `문항 ${num}`;
+      else if (type === "objectV") label.textContent = `문항 ${num}`;
+      else if (type === "objectH") label.textContent = `문항 ${num}`;
+      else if (type === "grid") label.textContent = `문항 ${num}`;
       else if (type === "section") label.textContent = `중제목 ${num}`;
     }
   });
@@ -346,23 +346,45 @@ function getGridQuestionHtml(questionNum, scaleType = "agree", scaleSize = 5) {
 			label: "동의 여부",
 			labels: {
 				5: ["전혀 동의하지 않음", "동의하지 않음", "보통이다", "동의함", "매우 동의함"],
-				7: ["전혀 동의하지 않음", "약간 동의하지 않음", "동의하지 않음", "보통이다", "동의함", "약간 동의함", "매우 동의함"]
+				7: ["전혀 동의하지 않음", "동의하지 않음", "약간 동의하지 않음", "보통이다", "약간 동의함", "동의함", "매우 동의함"]
 			}
 		},
 		satisfy: {
 			label: "만족도",
 			labels: {
 				5: ["매우 불만족", "불만족", "보통이다", "만족", "매우 만족"],
-				7: ["매우 불만족", "다소 불만족", "불만족", "보통이다", "만족", "다소 만족", "매우 만족"]
+				7: ["매우 불만족", "불만족", "다소 불만족", "보통이다", "다소 만족", "만족", "매우 만족"]
 			}
 		},
 		truth: {
 			label: "사실 여부",
 			labels: {
 				5: ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"],
-				7: ["전혀 그렇지 않다", "약간 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "약간 그렇다", "매우 그렇다"]
+				7: ["전혀 그렇지 않다", "그렇지 않다", "약간 그렇지 않다", "보통이다", "약간 그렇다", "그렇다", "매우 그렇다"]
 			}
+		},
+		importance: {
+			label: "중요도",
+			labels: {
+				5: ["전혀 중요하지 않음", "중요하지 않음", "보통이다", "중요함", "매우 중요함"],
+				7: ["전혀 중요하지 않음", "중요하지 않음", "다소 중요하지 않음", "보통이다", "다소 중요함", "중요함", "매우 중요함"]
+			}
+		},
+		use: {
+			label: "사용 빈도",
+			labels: {
+				5: ["전혀 중요하지 않음", "거의 사용하지 않음", "보통이다", "매우 자주 사용함", "항상 사용함"],
+				7: ["전혀 사용하지 않음", "거의 시용하지 않음", "가끔 사용함", "보통이다", "자주 사용함", "매우 자주 사용함", "항상 사용함"]
+			}			
+		},
+		action: {
+			label: "행동 의향",
+			labels: {
+				5: ["절대 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"],
+				7: ["절대 아니다", "아니다", "그럴 가능성 낮음", "보통이다", "그럴 가능성 있음", "그렇다", "매우 그렇다"]
+			}								
 		}
+		
 	};
 
 	const labels = scaleOptions[scaleType].labels[scaleSize];
@@ -392,7 +414,7 @@ function getGridQuestionHtml(questionNum, scaleType = "agree", scaleSize = 5) {
 	
 	<!-- 문항 헤더 -->
 	<div class="d-flex justify-content-between align-items-center mb-2">
-		<div class="mb-2 fw-bold">문항 ${questionNum} [그리드]</div>
+		<div class="mb-2 fw-bold">문항 ${questionNum}</div>
 		<div class="drag-handle" draggable="true" style="cursor: move;">⠿</div>
 	</div>
 	
@@ -403,6 +425,9 @@ function getGridQuestionHtml(questionNum, scaleType = "agree", scaleSize = 5) {
 			<option value="agree" ${scaleType === "agree" ? "selected" : ""}>동의 여부</option>
 			<option value="satisfy" ${scaleType === "satisfy" ? "selected" : ""}>만족도</option>
 			<option value="truth" ${scaleType === "truth" ? "selected" : ""}>사실 여부</option>
+			<option value="importance" ${scaleType === "importance" ? "selected" : ""}>중요도</option>
+			<option value="use" ${scaleType === "use" ? "selected" : ""}>사용 빈도</option>
+			<option value="action" ${scaleType === "action" ? "selected" : ""}>행동 의향</option>
 		</select>
 	
 		<label>척도 수:</label>
@@ -413,18 +438,22 @@ function getGridQuestionHtml(questionNum, scaleType = "agree", scaleSize = 5) {
 	</div>
 	
 	<!-- 그리드 테이블 -->
+	<div class="mb-2">
+  		<input type="text" class="form-control form-control-sm question-text" placeholder="중분류 입력">
+	</div>
+	
 	<div class="table-responsive">
 		<table class="table table-bordered text-center align-middle grid-table">
 			<thead>
 				<tr>
 					<th class="align-middle">
-						<input type="text" class="form-control form-control-sm question-text" placeholder="중분류 입력">
+						
 					</th>
 					${headerHtml}
 				</tr>
 			</thead>
 			<tbody>
-				  ${[1, 2].map((rowIdx) => `
+				  ${[1, 2, 3].map((rowIdx) => `
 				    <tr class="question-row">
 				      <td class="d-flex align-items-center gap-1">
 				        <button type="button" class="btn btn-sm btn-outline-danger delete-grid-row">✕</button>
@@ -521,7 +550,7 @@ document.getElementById("surveyUploadBtn").addEventListener("click", function ()
 });
 
 
-// 모달
+// 미리보기 모달
 document.addEventListener("DOMContentLoaded", function () {
   const previewBtns = [
     document.getElementById("surveyDetailBtn")
@@ -558,9 +587,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (questionClone) {
 		  questionClone.querySelectorAll(".drag-handle").forEach(el => el.remove());
 			
-          const questionTitle = document.createElement("h5");
-          questionTitle.textContent = " 설문 문항";
-          previewContent.appendChild(questionTitle);
+
 
           // 버튼, 조작기 제거 대신 숨김 처리
           const selectorsToHide = [
@@ -591,6 +618,12 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             }
           });
+          
+            const titleEl = questionClone.querySelector("h5.fw-bold");
+			  if (titleEl) {
+			    titleEl.style.display = "none";
+			  }
+
 
           	// 입력 필드 비활성화 및 스타일 제거
 			questionClone.querySelectorAll("input, textarea, select").forEach(el => {

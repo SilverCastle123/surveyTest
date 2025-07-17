@@ -17,16 +17,48 @@ function updateBtn(){
 	});
 };
 
+function deleteBtn() {
+  const btn = document.getElementById("deleteBtn");
 
-function deleteBtn(){
-	document.getElementById("deleteBtn").addEventListener("click", function () {
-    	Swal.fire({
-			title: "삭제버튼 클릭",
-			icon: "success"
-		});
-		return;
-	});
-};
+  if (btn) {
+    btn.addEventListener("click", function () {
+      Swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        text: "이 설문은 복구할 수 없습니다.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const surveyId = new URLSearchParams(location.search).get("id");
+
+          fetch(`/survey/api/surveys/${surveyId}`, {
+            method: 'DELETE',
+          })
+            .then(res => {
+              if (res.status === 204) {
+                Swal.fire('삭제 완료', '', 'success').then(() => {
+                  window.location.href = '/survey/main.do'; // 목록 페이지로 이동
+                });
+              } else {
+                throw new Error("삭제 실패");
+              }
+            })
+            .catch(err => {
+              console.error(err);
+              Swal.fire('삭제 실패', '서버 오류가 발생했습니다.', 'error');
+            });
+        }
+      });
+    });
+  }
+}
+
+
+
 
 
 
@@ -53,7 +85,28 @@ const scaleOptions = {
             5: ["전혀 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "매우 그렇다"],
             7: ["전혀 그렇지 않다", "약간 그렇지 않다", "그렇지 않다", "보통이다", "그렇다", "약간 그렇다", "매우 그렇다"]
         }
-    }
+    },
+		importance: {
+		label: "중요도",
+		labels: {
+			5: ["전혀 중요하지 않음", "중요하지 않음", "보통이다", "중요함", "매우 중요함"],
+			7: ["전혀 중요하지 않음", "중요하지 않음", "다소 중요하지 않음", "보통이다", "다소 중요함", "중요함", "매우 중요함"]
+		}
+	},
+	use: {
+		label: "사용 빈도",
+		labels: {
+			5: ["전혀 중요하지 않음", "거의 사용하지 않음", "보통이다", "매우 자주 사용함", "항상 사용함"],
+			7: ["전혀 사용하지 않음", "거의 시용하지 않음", "가끔 사용함", "보통이다", "자주 사용함", "매우 자주 사용함", "항상 사용함"]
+		}			
+	},
+	action: {
+		label: "행동 의향",
+		labels: {
+			5: ["절대 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"],
+			7: ["절대 아니다", "아니다", "그럴 가능성 낮음", "보통이다", "그럴 가능성 있음", "그렇다", "매우 그렇다"]
+		}								
+	}
 };
 
 // 그리드 테이블 헤더 생성 함수
@@ -92,3 +145,6 @@ function renderGridTableHeader(questionOrder, scaleType, scaleSize) {
     // thead에 추가
     thead.appendChild(tr);
 }
+
+
+

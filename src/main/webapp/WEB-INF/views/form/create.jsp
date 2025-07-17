@@ -40,7 +40,7 @@
 			    <li><a href="#" data-target=".basicInf" class="fw-bold text-primary">기본정보 등록</a></li>
 			    <li><a href="#" data-target=".question">설문문항 작성</a></li>
 			    <li><a href="#" data-target=".closing">맺음말 작성</a></li>
-			    <li><a href="#" data-target=".complete">설문게시</a></li>
+			    <li><a href="#" data-target=".complete">설문저장</a></li>
 			</ol>
 		</nav>
 		
@@ -96,7 +96,7 @@
       				<textarea class="form-control" rows="5" id="closingMessage" placeholder="맺음말 작성.."></textarea>
 	  			</div>
 				<div class="saveBtn" id="saveSurveyWrap">
-		  			<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">미리보기</button>
+		  			<button type="button" class="btn btn-primary mt-3" id="saveSurveyBtn">저장</button>
 	  			</div>
 			</div>
 		</div>
@@ -113,7 +113,7 @@
 					</div>
 					<div class="saveBtn d-flex justify-content-center gap-3" id="compleSurveyWrap">
 		  				<button type="button" class="btn btn-secondary rounded-pill px-3" id="surveyDetailBtn">미리보기</button>
-		  				<button type="button" class="btn btn-primary rounded-pill px-3" id="surveyUploadBtn">설문게시</button>
+		  				<button type="button" class="btn btn-primary rounded-pill px-3" id="surveyUploadBtn">설문저장</button>
 	  				</div>
 	  			</div>
 			</div>
@@ -139,7 +139,7 @@
 				</div>
 				<div class="addQuestionBtn text-center" id="grid" style="cursor: pointer;">
 		  			<img src="${pageContext.request.contextPath}/resources/img/button/gridBtn.png" alt="그리드" style="width: 100%;" draggable="false">
-			  		<div class="mt-1 small fw-bold">그리드</div>
+			  		<div class="mt-1 small fw-bold">다문항 선택</div>
 				</div>
 			</div>
 		</div>
