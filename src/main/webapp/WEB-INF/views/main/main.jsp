@@ -35,12 +35,12 @@
 		  	<table class="table table-striped table-hover table-bordered align-middle text-center">
 		    	<thead class="table-light">
 		      		<tr>
-				        <th scope="col">번호</th>
-				        <th scope="col">파일</th>
-				        <th scope="col">제목</th>
-				        <th scope="col">설문조사 시작일</th>
-				        <th scope="col">설문조사 마감일</th>
-				        <th scope="col">응답현황</th>
+				        <th class="w-auto" scope="col">번호</th>
+				        <th class="w-auto" scope="col">파일</th>
+				        <th class="w-75"   scope="col">제목</th>
+				        <th class="w-auto" scope="col">설문조사 시작일</th>
+				        <th class="w-auto" scope="col">설문조사 마감일</th>
+				        <th class="w-auto" scope="col">응답현황</th>
 		      		</tr>
 		    	</thead>
 		    	<tbody>
