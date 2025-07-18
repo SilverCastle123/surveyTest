@@ -38,8 +38,9 @@
 				        <th class="w-auto" scope="col">번호</th>
 				        <th class="w-auto" scope="col">파일</th>
 				        <th class="w-75"   scope="col">제목</th>
-				        <th class="w-auto" scope="col">설문조사 시작일</th>
-				        <th class="w-auto" scope="col">설문조사 마감일</th>
+				        <th class="w-auto" scope="col">시작일</th>
+				        <th class="w-auto" scope="col">마감일</th>
+				        <th class="w-auto" scope="col">설문현황</th>
 				        <th class="w-auto" scope="col">응답현황</th>
 		      		</tr>
 		    	</thead>
@@ -77,6 +78,26 @@
 					      </c:when>
 					      <c:otherwise>-</c:otherwise>
 					    </c:choose>
+					  </td>
+				      <td>
+						  <jsp:useBean id="now" class="java.util.Date" />
+						  
+						  <c:choose>
+						    <c:when test="${not empty survey.closingDateStr}">
+						      <fmt:parseDate value="${survey.closingDateStr}" pattern="yyyy-MM-dd" var="closingDateDate" />
+						      <c:choose>
+						        <c:when test="${closingDateDate.time >= now.time}">
+						          <span class="badge bg-primary">진행</span>
+						        </c:when>
+						        <c:otherwise>
+						          <span class="badge bg-secondary">마감</span>
+						        </c:otherwise>
+						      </c:choose>
+						    </c:when>
+						    <c:otherwise>
+						      <span class="badge bg-warning text-dark">미정</span>
+						    </c:otherwise>
+						  </c:choose>
 					  </td>
 				      <td>-</td> <!-- 응답현황 나중에 추가 -->
 				    </tr>
