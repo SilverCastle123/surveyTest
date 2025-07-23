@@ -10,6 +10,7 @@ function initSurveyApp() {
 	bindRadioChoice();			// 객관식 관련 호출
 	bindGridQuestion();			// 그리드 레이아웃 호출
 	getGridQuestionHtml();		// 그리드 문항상세 호출
+	bindCtrlPanelFollowScroll();// 스크롤 따라라오는 우측패널 호출
 }
 
 
@@ -55,6 +56,27 @@ function bindTopNav() {
 	});
 }
 
+function bindCtrlPanelFollowScroll() {
+	const panel = document.querySelector('.ctrl-panel');
+	if (!panel) return;
+
+	let lastScrollY = window.scrollY;
+	let currentY = lastScrollY;
+
+	function animateFollowScroll() {
+		const diff = lastScrollY - currentY;
+		currentY += diff * 0.1;
+
+		panel.style.transform = `translateY(${currentY}px)`;
+		requestAnimationFrame(animateFollowScroll);
+	}
+
+	window.addEventListener('scroll', () => {
+		lastScrollY = window.scrollY;
+	});
+
+	animateFollowScroll();
+}
 
 function bindCreateQuestion(){
 	document.querySelectorAll(".addQuestionBtn").forEach(btn => {

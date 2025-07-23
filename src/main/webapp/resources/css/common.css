@@ -29,17 +29,18 @@ html, body {
 
 /* 우측 고정 컨트롤러 공통 스타일 */
 .ctrl-panel {
-	position: fixed;
-	top: 50%;
+	position: absolute;
+	top: 100px;
 	right: 32px;
-	transform: translateY(-50%);
+	transition: transform 0.2s ease-out;
+	will-change: transform;
 	width: 300px;
 	z-index: 1000;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-	padding: 24px;
+	padding: 10px;
 }
 
 .addQuestionBtn {

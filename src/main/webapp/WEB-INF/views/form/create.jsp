@@ -122,24 +122,35 @@
 		<!-- 설문지 작성 컨트롤러 -->
 		<div class="ctrl-panel d-none" id="questionCtrl">
 			<div class="d-flex flex-column align-items-center">
-				<div class="addQuestionBtn text-center mb-2" id="section" style="cursor: pointer;">		  			
-			  		<div class="mt-1 small fw-bold">중제목 추가</div>
-				</div>			
-				<div class="addQuestionBtn text-center mb-2" id="objectV" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectVBtn.png" alt="객관식 세로" style="width: 100%;" draggable="false">
-			  		<div class="mt-1 small fw-bold">객관식(세로)</div>
+				<div class="addQuestionBtn text-center mb-2 position-relative" id="section" style="cursor: pointer;">
+					<img src="${pageContext.request.contextPath}/resources/img/button/sectionBtn.png" alt="중제목" style="width: 80%;" draggable="false">
+			  		<div class="position-absolute top-50 start-50 translate-middle-y small fw-bold" style="margin-left: 20px;">
+			  			중제목 추가
+			  		</div>
+				</div>	
+				<div class="addQuestionBtn text-center mb-2 position-relative" id="objectV" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectVBtn.png" alt="객관식 세로" style="width: 80%;" draggable="false">
+			  		<div class="position-absolute top-50 start-50 translate-middle-y small fw-bold" style="margin-left: 20px;">
+			  			객관식(세로)
+			  		</div>
 				</div>
-				<div class="addQuestionBtn text-center mb-2" id="objectH" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectHBtn.png" alt="객관식 가로" style="width: 100%;" draggable="false">
-			  		<div class="mt-1 small fw-bold">객관식(가로)</div>
+				<div class="addQuestionBtn text-center mb-2 position-relative" id="objectH" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/objectHBtn.png" alt="객관식 가로" style="width: 80%;" draggable="false">
+			  		<div class="position-absolute top-50 start-50 translate-middle-y small fw-bold" style="margin-left: 20px;">
+			  			객관식(가로)
+			  		</div>
 				</div>
-				<div class="addQuestionBtn text-center mb-2" id="subject" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/subjectBtn.png" alt="주관식" style="width: 100%;" draggable="false">
-			  		<div class="mt-1 small fw-bold">주관식</div>
+				<div class="addQuestionBtn text-center mb-2 position-relative" id="subject" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/subjectBtn.png" alt="주관식" style="width: 80%;" draggable="false">
+			  		<div class="position-absolute top-50 start-50 translate-middle-y small fw-bold" style="margin-left: 20px;">
+			  			&nbsp;&nbsp;&nbsp;주관식
+			  		</div>
 				</div>
-				<div class="addQuestionBtn text-center" id="grid" style="cursor: pointer;">
-		  			<img src="${pageContext.request.contextPath}/resources/img/button/gridBtn.png" alt="그리드" style="width: 100%;" draggable="false">
-			  		<div class="mt-1 small fw-bold">다문항 선택</div>
+				<div class="addQuestionBtn text-center mb-2 position-relative" id="grid" style="cursor: pointer;">
+		  			<img src="${pageContext.request.contextPath}/resources/img/button/gridBtn.png" alt="그리드" style="width: 80%;" draggable="false">
+			  		<div class="position-absolute top-50 start-50 translate-middle-y small fw-bold" style="margin-left: 20px;">
+			  			다문항 선택
+			  		</div>
 				</div>
 			</div>
 		</div>
