@@ -13,17 +13,26 @@ document.getElementById("createFormBtn").addEventListener("click", function () {
 });
 
 
-function bindSearch(){
-	document.getElementById("searchBtn").addEventListener("click", function () {
-		const searchText = document.getElementById("searchText").value;
-		Swal.fire({
-			title: "검색버튼 클릭 체크",
-			icon: "success",
-			text: `검색어: ${searchText}`,
-			draggable: true
-		});
+function bindSearch() {
+	const searchBtn = document.getElementById("searchBtn");
+	const searchInput = document.getElementById("searchText");
+
+	if (!searchBtn || !searchInput) return;
+
+	searchBtn.addEventListener("click", function () {
+		const query = searchInput.value.trim();
+		if (query !== "") {
+			window.location.href = `/survey/main.do?search=${encodeURIComponent(query)}`;
+		}
+	});
+
+	searchInput.addEventListener("keypress", function (e) {
+		if (e.key === "Enter") {
+			searchBtn.click();
+		}
 	});
 };
+
 
 
 

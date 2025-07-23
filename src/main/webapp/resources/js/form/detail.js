@@ -7,15 +7,17 @@ function initSurveyApp() {
 };
 
 
-function updateBtn(){
-	document.getElementById("UpdateBtn").addEventListener("click", function () {
-    	Swal.fire({
-			title: "수정버튼 클릭",
-			icon: "success"
-		});
-		return;
-	});
-};
+function updateBtn() {
+  const btn = document.getElementById("UpdateBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    // 수정 페이지로 이동
+    const surveyId = document.getElementById("surveyId").value;
+    window.location.href = `/survey/update.do?id=${surveyId}`;
+  });
+}
+
 
 function deleteBtn() {
   const btn = document.getElementById("deleteBtn");

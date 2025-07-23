@@ -23,6 +23,7 @@
 			<div class="tab-pane fade show active" id="questionArea" role="tabpanel">
 				<div class="card mt-3">
 				    <!-- 설문 제목 및 설명 -->
+				    <input type="hidden" id="surveyId" value="${survey.id}">
 				    <div class="card-header bg-primary text-white">
 				        <h4>${survey.title}</h4>
 				    </div>
