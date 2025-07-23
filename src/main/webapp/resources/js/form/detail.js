@@ -8,7 +8,7 @@ function initSurveyApp() {
 
 
 function updateBtn() {
-  const btn = document.getElementById("UpdateBtn");
+  const btn = document.getElementById("updateBtn");
   if (!btn) return;
 
   btn.addEventListener("click", function () {

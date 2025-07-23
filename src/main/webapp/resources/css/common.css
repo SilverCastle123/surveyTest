@@ -150,3 +150,22 @@ html, body {
 	color: #000;
 	font-weight: 600;
 }
+
+/* 아이콘 사용한 버튼 CSS */
+.icon-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.icon-btn {
+  transition: transform 0.1s ease;
+}
+
+.icon-btn:active {
+  transform: scale(0.9);
+}
+
