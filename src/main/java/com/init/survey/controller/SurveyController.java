@@ -56,13 +56,35 @@ public class SurveyController {
     public ResponseEntity<?> saveSurvey(@Valid @RequestBody SurveySaveRequest request,
                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // 에러 메시지 추출 (간단한 버전)
+            // 에러 메시지 추출
             String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
             return ResponseEntity.badRequest().body(errorMessage);
         }
 
         surveyService.saveSurveyWithQuestions(request);
         return ResponseEntity.ok("설문 저장 성공");
+    }
+    
+    
+    //설문수정
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateSurvey(
+            @PathVariable Long id,
+            @Valid @RequestBody SurveySaveRequest request,
+            BindingResult bindingResult) {
+    	System.out.println("수정컨트롤러 접속"+id);
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        try {
+            surveyService.updateSurvey(id, request);
+            return ResponseEntity.ok("설문 수정 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("설문 수정 중 오류가 발생했습니다." + e.getMessage());
+        }
     }
     
 

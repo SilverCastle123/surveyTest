@@ -35,6 +35,9 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
             "WHERE s.id = :id")
      Optional<Survey> findByIdWithQuestionsAndChoices(@Param("id") Long id);
     
+    // 제목에 키워드가 포함된 설문 검색
+    Page<Survey> findByTitleContainingIgnoreCase(String keyword, Pageable pageable);
+    
  
 
 

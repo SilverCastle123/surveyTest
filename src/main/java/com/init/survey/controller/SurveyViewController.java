@@ -46,14 +46,21 @@ public class SurveyViewController {
     @GetMapping("/main.do")
     public String showSurveyList(@RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "10") int size,
+                                 @RequestParam(required = false) String search,
                                  Model model) {
-        Page<SurveyDTO> surveyPage = surveyService.getSurveysPaged(page, size);
+        Page<SurveyDTO> surveyPage;
+        if (search != null && !search.trim().isEmpty()) {
+            surveyPage = surveyService.searchSurveys(search, page, size);
+        } else {
+            surveyPage = surveyService.getSurveysPaged(page, size);
+        }
 
         model.addAttribute("surveyList", surveyPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", surveyPage.getTotalPages());
         model.addAttribute("hasNext", surveyPage.hasNext());
         model.addAttribute("hasPrevious", surveyPage.hasPrevious());
+        model.addAttribute("search", search);
 
         return "main/main";                 
     }
@@ -83,6 +90,19 @@ public class SurveyViewController {
         
         return "form/detail";
     }
+    
+    
+    @GetMapping("/update.do")
+    public String showUpdatePage(@RequestParam Long id, Model model) {
+        // id로 설문 조회 후 모델에 담기
+        SurveyDTO survey = surveyService.getSurveyById(id);
+                
+        
+        model.addAttribute("survey", survey);
+        return "form/update";  
+    }    
+    
+    
     
 
 

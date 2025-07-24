@@ -74,6 +74,19 @@ public class SurveyServiceImpl implements SurveyService {
     public void deleteSurvey(Long id) {
         surveyRepository.deleteById(id);
     }
+    
+    //검색기능
+    @Transactional(readOnly = true)
+    public Page<SurveyDTO> searchSurveys(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Survey> surveyPage = surveyRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+
+        // 연관 컬렉션 강제 초기화
+        surveyPage.getContent().forEach(survey -> survey.getQuestions().size());
+
+        // 변환
+        return surveyPage.map(this::convertToDTO);
+    }
 
     @Override
     @Transactional
@@ -164,6 +177,81 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     
+    //수정
+    @Override
+    @Transactional
+    public void updateSurvey(Long id, SurveySaveRequest request) {
+        Survey existingSurvey = surveyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 설문이 존재하지 않습니다. id=" + id));
+
+        // 기본 정보 수정
+        existingSurvey.setTitle(request.getTitle());
+        existingSurvey.setDescription(request.getDescription());
+        existingSurvey.setClosingMessage(request.getClosingMessage());
+        existingSurvey.setClosingDate(request.getClosingDate());
+
+     
+        // 안전하게 기존 질문, 선택지, 그리드 카테고리 모두 삭제 처리
+        if (existingSurvey.getQuestions() != null) {
+            existingSurvey.getQuestions().forEach(q -> {
+                if (q.getChoices() != null) {
+                    q.getChoices().clear();
+                }
+                if (q.getGridCategories() != null) {
+                    q.getGridCategories().clear();
+                }
+            });
+            existingSurvey.getQuestions().clear();
+        }
+
+        // 새 질문들 생성
+        Set<Question> questions = request.getQuestions().stream()
+                .map(q -> {
+                    Question question = Question.builder()
+                            .questionOrder(q.getQuestionOrder())
+                            .type(q.getType())
+                            .content(q.getContent())
+                            .scaleType(q.getScaleType())
+                            .scaleSize(q.getScaleSize())
+                            .survey(existingSurvey)
+                            .build();
+
+                    if ((q.getType().equals("objectV") || q.getType().equals("objectH"))
+                            && q.getChoices() != null) {
+                        Set<Choice> choices = q.getChoices().stream()
+                                .map(choiceDTO -> Choice.builder()
+                                        .choiceOrder(choiceDTO.getChoiceOrder() != null ? choiceDTO.getChoiceOrder() : 0)
+                                        .content(choiceDTO.getContent())
+                                        .question(question)
+                                        .build())
+                                .collect(Collectors.toSet());
+                        question.setChoices(choices);
+                    }
+
+                    if ("grid".equals(q.getType())) {
+                        if (q.getCategories() != null) {
+                            Set<GridCategory> categories = q.getCategories().stream()
+                                    .map(catDTO -> GridCategory.builder()
+                                            .categoryOrder(catDTO.getCategoryOrder())
+                                            .content(catDTO.getContent())
+                                            .question(question)
+                                            .build())
+                                    .collect(Collectors.toSet());
+                            question.setGridCategories(categories);
+                        }
+                    }
+
+                    return question;
+                })
+                .collect(Collectors.toSet());
+
+        existingSurvey.getQuestions().clear();
+        existingSurvey.getQuestions().addAll(questions);
+
+        // 변경내용 저장 (Cascade 옵션에 의해 질문, 선택지, 카테고리도 저장)
+        surveyRepository.save(existingSurvey);
+    }
+
     
     
  
